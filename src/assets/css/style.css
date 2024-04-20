@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+body{font-family: 'Roboto', sans-serif;}
+.loaded.fxt-template-animation {
+    opacity: 1;
+}
+.fxt-form h2{font-size: 25px;font-weight:300; margin-bottom:20px;}
+.fxt-form h2 span{
+    color: #ffffff;
+    text-transform: uppercase;
+    background: #0274d5;
+    padding: 4px 10px;
+    /* border-radius: 5px; */
+    }
+.fxt-template-animation {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    opacity: 0;
+    overflow: hidden;
+    -webkit-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+.fxt-bg-img {
+    min-height: 100vh;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    padding: 30px 15px;
+}
+.fxt-bg-color {
+    background-color: #e6eded;
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -ms-flexbox;
+   /* display: flex;*/
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    /* justify-content: center; */
+    padding: 60px 0;
+}
+.pg-logo img{width:50%;}
+.input-container {
+  display: flex;
+  width: 100%;
+  margin-bottom: 15px;
+}
+/* Style the form icons */
+.icon {
+  padding: 10px;
+  background: #0274D5;
+  color: white;
+  min-width: 50px;
+  text-align: center;
+  font-size: 25px;
+  border-radius: 5px 0 0 5px;
+}
+
+/* Style the input fields */
+.input-field {
+  width: 100%;
+  padding: 10px;
+  outline: none;
+  border: 1px solid #c1c0c0;
+  min-height: 50px;
+  border-radius: 0 5px 5px 0;
+}
+
+.input-field:focus {
+  border: 2px solid #0274D5;
+}
+.log-in-btn-wrap{margin-top:30px;}
+.btn-login{padding:14px;}
+.btn-primary {
+    color: #fff;
+    background-color: #0274d5;
+    border-color: #0274d5;
+}
+.btn-primary:hover{background-color: #0559a1;border-color: #0559a1;}
+
+.card-body{
+  padding: -1rem;
+}

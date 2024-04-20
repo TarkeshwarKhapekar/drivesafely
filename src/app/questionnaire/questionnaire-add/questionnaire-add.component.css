@@ -1,0 +1,52 @@
+.active {
+    background-color: #fff;
+    color: #0a0a0a;
+  }
+  .inactive {
+    background-color: white;
+    color: grey;
+  }
+  .custom-button {
+    height: 45px;
+    width: 250px;
+  }
+
+  .language-toggle {
+    display: inline-flex;
+    position: relative;
+    width: 70px;
+    height: 24px;
+    border-radius: 12px;
+    background-color: #ccc;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  
+  .language-toggle span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    height: 100%;
+    line-height: 24px;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .language-toggle span.active {
+    background-color: #2196F3;
+  }
+  
+  .language-toggle span:first-child {
+    border-radius: 12px 0 0 12px;
+  }
+  
+  .language-toggle span:last-child {
+    border-radius: 0 12px 12px 0;
+  }
+  
+  label {
+    margin-right:  10px; /* Added margin between button and label */
+  }

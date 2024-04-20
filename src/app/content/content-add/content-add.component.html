@@ -1,0 +1,871 @@
+<div>
+  <section class="content">
+    <div class="page-title">
+      <div class="title_left">
+        <h2>
+          <b *ngIf="contentId">{{ "content.EditContent" | translate }}</b>
+          <b *ngIf="!contentId">{{ "content.AddContent" | translate }}</b>
+        </h2>
+      </div>
+      <div class="title_right">
+        <input
+          class="btn btn-primary graident btn-small btn-pad-top-bot-4"
+          type="button"
+          value="{{ 'content.Back' | translate }}"
+          (click)="goBack()"
+          style="float: right"
+        />
+      </div>
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="pathway-template">
+      <div class="row">
+        <div class="col-12">
+          <form [formGroup]="addContentForm" (ngSubmit)="onSubmit()">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-12 col-md-6 col-lg-6">
+                  <div class="form-group mb-3">
+                    <label class="label">{{
+                      "content.Type" | translate
+                    }}</label>
+                    <select
+                      name="type"
+                      class="form-control"
+                      formControlName="type"
+                      (change)="onTypeChange($event)"
+                    >
+                      <option selected="selected" value="">
+                        {{ "content.SelectType" | translate }}
+                      </option>
+                      <option value="Advertisement">
+                        {{ "content.Advertisement" | translate }}
+                      </option>
+                      <option value="Traffic Safety Information">
+                        {{ "content.TrafficSafetyInformation" | translate }}
+                      </option>
+                      <option value="Articles & Blogs">
+                        {{ "content.Articles&Blogs" | translate }}
+                      </option>
+                      <option value="Other">
+                        {{ "content.Other" | translate }}
+                      </option>
+                    </select>
+                  </div>
+                  <span
+                    *ngIf="
+                      submitted ||
+                      (f.type.errors && (f.type.dirty || f.type.touched))
+                    "
+                  >
+                    <label
+                      class="text-danger"
+                      *ngIf="addContentForm.get('type').hasError('required')"
+                    >
+                      {{ "content.Typeisrequired!" | translate }}
+                    </label>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-12 col-md-6 col-lg-12">
+                  <div class="form-group mb-3">
+                    <label>{{ "content.ContentTitle" | translate }}</label>
+                    <div class="language-toggle">
+                      <span
+                        (click)="selectedLng = 'ja'"
+                        [ngClass]="{ active: selectedLng === 'ja' }"
+                        >Jap</span
+                      >
+                      <span
+                        (click)="selectedLng = 'en'"
+                        [ngClass]="{ active: selectedLng === 'en' }"
+                        >Eng</span
+                      >
+                    </div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="{{ 'content.EnterTitle' | translate }}"
+                      formControlName="title"
+                      [ngClass]="{ 'form-submitted': submitted }"
+                      [hidden]="selectedLng !== 'en'"
+                    />
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="コンテンツのタイトルを入力してください"
+                      formControlName="titleJa"
+                      [hidden]="selectedLng !== 'ja'"
+                    />
+                  </div>
+                  <span
+                    *ngIf="
+                      submitted ||
+                      (f.title.errors && (f.title.dirty || f.title.touched)) ||
+                      (f.titleJa.errors &&
+                        (f.titleJa.dirty || f.titleJa.touched))
+                    "
+                  >
+                    <label
+                      class="text-danger"
+                      *ngIf="
+                        selectedLng == 'en' &&
+                        addContentForm.get('title').hasError('required')
+                      "
+                    >
+                      {{ "content.Titleisrequired!" | translate }}
+                    </label>
+                    <label
+                      class="text-danger"
+                      *ngIf="
+                        selectedLng == 'ja' &&
+                        addContentForm.get('titleJa').hasError('required')
+                      "
+                    >
+                      {{ "content.Titleisrequired!" | translate }}
+                    </label>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="container-fluid"
+              *ngIf="selectedType == 'Advertisement'"
+            >
+              <div class="row">
+                <div class="col-12 col-md-6 col-lg-12">
+                  <div class="form-group mb-3">
+                    <label>{{ "content.RedirctURL/Link" | translate }}</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="{{ 'content.EnterURL/Link' | translate }}"
+                      formControlName="url"
+                      [ngClass]="{ 'form-submitted': submitted }"
+                    />
+                    <span *ngIf="f.url.touched && f.url.hasError('invalidUrl')">
+                      <label class="text-danger">{{
+                        "content.InvalidURLformat" | translate
+                      }}</label>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-12 col-md-6 col-lg-12">
+                  <div class="form-group mb-3">
+                    <label>{{ "content.Description" | translate }}</label>
+                    <div class="language-toggle">
+                      <span
+                        (click)="selectLng = 'ja'"
+                        [ngClass]="{ active: selectLng === 'ja' }"
+                        >Jap</span
+                      >
+                      <span
+                        (click)="selectLng = 'en'"
+                        [ngClass]="{ active: selectLng === 'en' }"
+                        >Eng</span
+                      >
+                    </div>
+                    <textarea
+                      type="text"
+                      class="form-control"
+                      placeholder="{{ 'content.EnterDescription' | translate }}"
+                      [ngClass]="{ 'form-submitted': submitted }"
+                      formControlName="description"
+                      [hidden]="selectLng !== 'en'"
+                    ></textarea>
+                    <textarea
+                      type="text"
+                      class="form-control"
+                      placeholder="コンテンツの詳細を入力してください"
+                      formControlName="descriptionJa"
+                      [hidden]="selectLng !== 'ja'"
+                    ></textarea>
+                  </div>
+                  <span
+                    *ngIf="
+                      submitted ||
+                      (f.description.errors &&
+                        (f.description.dirty || f.description.touched)) ||
+                      (f.descriptionJa.errors &&
+                        (f.descriptionJa.dirty || f.descriptionJa.touched))
+                    "
+                  >
+                    <label
+                      class="text-danger"
+                      *ngIf="
+                        selectLng == 'en' &&
+                        addContentForm.get('description').hasError('required')
+                      "
+                    >
+                      {{ "content.Descriptionisrequired!" | translate }}
+                    </label>
+                    <label
+                      class="text-danger"
+                      *ngIf="
+                        selectLng == 'ja' &&
+                        addContentForm.get('descriptionJa').hasError('required')
+                      "
+                    >
+                      {{ "content.Descriptionisrequired!" | translate }}
+                    </label>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="container-fluid">
+              <div class="row">
+                <!-- ***************upload image/video************ -->
+                <div
+                  class="col-md-6"
+                  [hidden]="
+                    selectedType === 'Articles & Blogs' ||
+                    selectedType === 'Other'
+                  "
+                >
+                  <div class="form-group">
+                    <label for="">{{
+                      "content.Image/Video" | translate
+                    }}</label>
+                    <div class="language-toggle">
+                      <span
+                        (click)="selectImgVid = 'img'"
+                        [ngClass]="{ active: selectImgVid === 'img' }"
+                        >Img</span
+                      >
+                      <span
+                        (click)="selectImgVid = 'vid'"
+                        [ngClass]="{ active: selectImgVid === 'vid' }"
+                        >Vid.</span
+                      >
+                    </div>
+                    <div
+                      class="upload-img"
+                      (click)="openImageSelector()"
+                      [hidden]="selectImgVid !== 'img'"
+                    >
+                      <i class="fa fa-camera action_btn" aria-hidden="true"></i>
+                      <span class="action_btn" style="cursor: pointer">
+                        {{ "content.UploadImages" | translate }}</span
+                      >
+                      <input
+                        type="file"
+                        style="display: none"
+                        class="btn chngPic file-upload"
+                        accept="image/*"
+                        name="file"
+                        id="file"
+                        (change)="onFileChanged($event)"
+                        formControlName="images"
+                      />
+                    </div>
+                    <div
+                      class="upload-img"
+                      (click)="openVideoSelector()"
+                      [hidden]="selectImgVid !== 'vid'"
+                    >
+                      <i class="fa fa-camera action_btn" aria-hidden="true"></i>
+                      <span class="action_btn" style="cursor: pointer">
+                        {{ "content.UploadVideos" | translate }}</span
+                      >
+                      <input
+                        type="file"
+                        style="display: none"
+                        class="btn chngPic video-upload"
+                        accept="video/*"
+                        name="file"
+                        id="file"
+                        (change)="onVideoSelectorChange($event)"
+                        formControlName="videos"
+                      />
+                    </div>
+
+                    <!-- mobile-frame-wrapper html  -->
+                    <div
+                      id="onlyimgorvdo"
+                      class="mobile-frame-wrapper position-relative"
+                    >
+                      <img
+                        class="img-fluid w-100"
+                        src="../../../assets/img/mobile-frame-media/mobile-frame.png"
+                        alt=""
+                      />
+                      <div
+                        class="content-wrapper position-absolute d-flex flex-column"
+                      >
+                        <div class="status-bar position-absolute">
+                          <img
+                            class="img-fluid"
+                            src="../../../assets/img/mobile-frame-media/mobile-status-bar.svg"
+                            alt=""
+                          />
+                        </div>
+                        <header class="mobile-head">
+                          <div class="logo-cell">
+                            <img
+                              class="img-fluid"
+                              src="../../../assets/img/mobile-frame-media/logo.png"
+                              alt="Logo"
+                            />
+                          </div>
+                        </header>
+                        <div class="media-grid mt-auto">
+                          <div class="row">
+                            <!-- For Images only -->
+                            <div
+                              class="col-sm-6"
+                              *ngIf="contentPreviewImages[0]"
+                            >
+                              <img
+                                [src]="contentPreviewImages[0]"
+                                alt="gallery-pic"
+                              />
+                            </div>
+                            <div
+                              class="col-sm-6"
+                              *ngIf="contentPreviewImages[1]"
+                            >
+                              <img
+                                [src]="contentPreviewImages[1]"
+                                alt="gallery-pic"
+                              />
+                            </div>
+                            <div
+                              class="col-sm-4"
+                              *ngIf="contentPreviewImages[2]"
+                            >
+                              <img
+                                [src]="contentPreviewImages[2]"
+                                alt="gallery-pic"
+                              />
+                            </div>
+                            <div
+                              class="col-sm-4"
+                              *ngIf="contentPreviewImages[3]"
+                            >
+                              <img
+                                [src]="contentPreviewImages[3]"
+                                alt="gallery-pic"
+                              />
+                            </div>
+                            <div
+                              class="col-sm-4"
+                              *ngIf="contentPreviewImages[4]"
+                            >
+                              <img
+                                [src]="contentPreviewImages[4]"
+                                alt="gallery-pic"
+                              />
+                              <div
+                                *ngIf="contentPreviewImages.length > 5"
+                                class="image-count position-absolute d-inline-flex align-items-center justify-content-center"
+                              >
+                                +{{ contentPreviewImages.length - 5 }}
+                              </div>
+                            </div>
+
+                            <!-- For videos only -->
+
+                            <div
+                              class="col-sm-6"
+                              *ngIf="contentPreviewVideos[0]"
+                            >
+                              <video
+                                [src]="contentPreviewVideos[0]"
+                                style="height: 60px; width: 60px"
+                              ></video>
+                            </div>
+                            <div
+                              class="col-sm-6"
+                              *ngIf="contentPreviewVideos[1]"
+                            >
+                              <video
+                                [src]="contentPreviewVideos[1]"
+                                style="height: 60px; width: 60px"
+                              ></video>
+                            </div>
+                            <div
+                              class="col-sm-4"
+                              *ngIf="contentPreviewVideos[2]"
+                            >
+                              <video
+                                [src]="contentPreviewVideos[2]"
+                                style="height: 60px; width: 60px"
+                              ></video>
+                            </div>
+                            <div
+                              class="col-sm-4"
+                              *ngIf="contentPreviewVideos[3]"
+                            >
+                              <video
+                                [src]="contentPreviewVideos[3]"
+                                style="height: 60px; width: 60px"
+                              ></video>
+                            </div>
+                            <div
+                              class="col-sm-4"
+                              *ngIf="contentPreviewVideos[4]"
+                            >
+                              <video
+                                [src]="contentPreviewVideos[4]"
+                                style="height: 60px; width: 60px"
+                              ></video>
+                              <div
+                                *ngIf="contentPreviewVideos.length > 5"
+                                class="image-count position-absolute d-inline-flex align-items-center justify-content-center"
+                              >
+                                +{{ contentPreviewVideos.length - 5 }}
+                              </div>
+                            </div>
+
+                            <div class="media-txt">
+                              <h6 [hidden]="selectedLng !== 'en'">
+                                {{ addContentForm.get("title").value }}
+                              </h6>
+                              <h6 [hidden]="selectedLng !== 'ja'">
+                                {{ addContentForm.get("titleJa").value }}
+                              </h6>
+
+                              <p [hidden]="selectLng !== 'en'">
+                                {{
+                                  addContentForm.get("description").value
+                                    .length > 60
+                                    ? (addContentForm.get("description").value
+                                        | slice : 0 : 60) + "..."
+                                    : addContentForm.get("description").value
+                                }}
+                              </p>
+                              <p [hidden]="selectLng !== 'ja'">
+                                {{
+                                  addContentForm.get("descriptionJa").value
+                                    .length > 60
+                                    ? (addContentForm.get("descriptionJa").value
+                                        | slice : 0 : 60) + "..."
+                                    : addContentForm.get("descriptionJa").value
+                                }}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row" style="margin-left: -7px">
+                    <div
+                      class="col-md-6 image_area"
+                      *ngFor="
+                        let previewImage of contentPreviewImages;
+                        let i = index
+                      "
+                    >
+                      <img
+                        class="preview-img"
+                        [src]="previewImage"
+                        alt=""
+                        height="60px"
+                        width="80px"
+                      />
+                      <em
+                        class="fa fa-times-circle remove_icon"
+                        style="
+                          font-size: 15px;
+                          color: rgb(255, 17, 0);
+                          margin-top: 0px;
+                          position: absolute;
+                          margin-left: -15px;
+                          font-weight: bold;
+                        "
+                        (click)="removeImages(previewImage)"
+                        height="10px"
+                      ></em>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div
+                      class="col-md-12"
+                      *ngFor="
+                        let videoPreview of contentPreviewVideos;
+                        let i = index
+                      "
+                    >
+                      <video
+                        class="preview-video"
+                        preload="metadata"
+                        height="100px"
+                        width="100px"
+                      >
+                        <source [src]="videoPreview" type="video/mp4" />
+                        Your browser does not support the video tag.
+                      </video>
+                      <em
+                        class="fa fa-times-circle remove_icon"
+                        style="
+                          font-size: 15px;
+                          color: rgb(255, 17, 0);
+                          margin-top: 18px;
+                          position: absolute;
+                          margin-left: -15px;
+                          font-weight: bold;
+                        "
+                        (click)="removeVideo(videoPreview)"
+                      ></em>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- ***************upload image************ -->
+                <div
+                  class="col-md-6"
+                  [hidden]="
+                    !(
+                      selectedType === 'Articles & Blogs' ||
+                      selectedType === 'Other'
+                    )
+                  "
+                >
+                  <div class="form-group">
+                    <label for="">{{ "content.Image" | translate }}</label>
+                    <div class="upload-img" (click)="openImageSelector()">
+                      <i class="fa fa-camera action_btn" aria-hidden="true"></i>
+                      <span class="action_btn" style="cursor: pointer">
+                        {{ "content.UploadImages" | translate }}</span
+                      >
+                      <input
+                        type="file"
+                        style="display: none"
+                        class="btn chngPic file-upload"
+                        accept="image/*"
+                        name="file"
+                        id="file"
+                        (change)="onFileChanged($event)"
+                        formControlName="images"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="row" style="margin-left: -7px">
+                    <div
+                      class="col-md-6 image_area"
+                      *ngFor="
+                        let previewImage of contentPreviewImages;
+                        let i = index
+                      "
+                    >
+                      <img
+                        class="preview-img"
+                        [src]="previewImage"
+                        alt=""
+                        height="60px"
+                        width="80px"
+                      />
+
+                      <em
+                        class="fa fa-times-circle remove_icon"
+                        style="
+                          font-size: 15px;
+                          color: rgb(255, 17, 0);
+                          margin-top: 0px;
+                          position: absolute;
+                          margin-left: -15px;
+                          font-weight: bold;
+                        "
+                        (click)="removeImages(previewImage)"
+                        height="10px"
+                      ></em>
+                    </div>
+                  </div>
+
+                  <div
+                    id="bothimgvdo"
+                    class="mobile-frame-wrapper position-relative"
+                  >
+                    <img
+                      class="img-fluid w-100"
+                      src="../../../assets/img/mobile-frame-media/mobile-frame.png"
+                      alt=""
+                    />
+                    <div
+                      class="content-wrapper position-absolute d-flex flex-column"
+                    >
+                      <div class="status-bar position-absolute">
+                        <img
+                          class="img-fluid"
+                          src="../../../assets/img/mobile-frame-media/mobile-status-bar.svg"
+                          alt=""
+                        />
+                      </div>
+                      <header class="mobile-head">
+                        <div class="logo-cell">
+                          <img
+                            class="img-fluid"
+                            src="../../../assets/img/mobile-frame-media/logo.png"
+                            alt="Logo"
+                          />
+                        </div>
+                      </header>
+                      <div
+                        class="media-grid mt-auto"
+                        *ngIf="
+                          contentPreviewImages.length ||
+                          contentPreviewVideos.length
+                        "
+                      >
+                        <div class="row">
+                          <div class="col-sm-6" *ngIf="contentPreviewImages[0]">
+                            <img
+                              [src]="contentPreviewImages[0]"
+                              alt="gallery-pic"
+                            />
+                          </div>
+                          <div class="col-sm-6" *ngIf="contentPreviewImages[1]">
+                            <img
+                              [src]="contentPreviewImages[1]"
+                              alt="gallery-pic"
+                            />
+                          </div>
+                          <div class="col-sm-4" *ngIf="contentPreviewImages[2]">
+                            <img
+                              [src]="contentPreviewImages[2]"
+                              alt="gallery-pic"
+                            />
+                          </div>
+                          <div class="col-sm-4" *ngIf="contentPreviewImages[3]">
+                            <img
+                              [src]="contentPreviewImages[3]"
+                              alt="gallery-pic"
+                            />
+                          </div>
+                          <div class="col-sm-4" *ngIf="contentPreviewImages[4]">
+                            <img
+                              [src]="contentPreviewImages[4]"
+                              alt="gallery-pic"
+                            />
+                            <div
+                              *ngIf="contentPreviewImages.length > 5"
+                              class="image-count position-absolute d-inline-flex align-items-center justify-content-center"
+                            >
+                              +{{ contentPreviewImages.length - 5 }}
+                            </div>
+                          </div>
+
+                          <!-- For videos only -->
+
+                          <div
+                            class="col-sm-6"
+                            *ngIf="
+                              contentPreviewVideos[0] &&
+                              contentPreviewImages.length < 5
+                            "
+                          >
+                            <video
+                              [src]="contentPreviewVideos[0]"
+                              style="height: 60px; width: 60px"
+                            ></video>
+                          </div>
+                          <div
+                            class="col-sm-6"
+                            *ngIf="
+                              contentPreviewVideos[1] &&
+                              contentPreviewImages.length < 4
+                            "
+                          >
+                            <video
+                              [src]="contentPreviewVideos[1]"
+                              style="height: 60px; width: 60px"
+                            ></video>
+                          </div>
+                          <div
+                            class="col-sm-4"
+                            *ngIf="
+                              contentPreviewVideos[2] &&
+                              contentPreviewImages.length < 3
+                            "
+                          >
+                            <video
+                              [src]="contentPreviewVideos[2]"
+                              style="height: 60px; width: 60px"
+                            ></video>
+                          </div>
+                          <div
+                            class="col-sm-4"
+                            *ngIf="
+                              contentPreviewVideos[3] &&
+                              contentPreviewImages.length < 2
+                            "
+                          >
+                            <video
+                              [src]="contentPreviewVideos[3]"
+                              style="height: 60px; width: 60px"
+                            ></video>
+                          </div>
+                          <div
+                            class="col-sm-4"
+                            *ngIf="
+                              contentPreviewVideos[4] &&
+                              contentPreviewImages.length < 1
+                            "
+                          >
+                            <video
+                              [src]="contentPreviewVideos[4]"
+                              style="height: 60px; width: 60px"
+                            ></video>
+                            <div
+                              *ngIf="contentPreviewVideos.length > 5"
+                              class="image-count position-absolute d-inline-flex align-items-center justify-content-center"
+                            >
+                              +{{ contentPreviewVideos.length - 5 }}
+                            </div>
+                          </div>
+
+                          <div class="media-txt">
+                            <h6 [hidden]="selectedLng !== 'en'">
+                              {{ addContentForm.get("title").value }}
+                            </h6>
+                            <h6 [hidden]="selectedLng !== 'ja'">
+                              {{ addContentForm.get("titleJa").value }}
+                            </h6>
+
+                            <p [hidden]="selectLng !== 'en'">
+                              {{
+                                addContentForm.get("description").value.length >
+                                60
+                                  ? (addContentForm.get("description").value
+                                      | slice : 0 : 60) + "..."
+                                  : addContentForm.get("description").value
+                              }}
+                            </p>
+                            <p [hidden]="selectLng !== 'ja'">
+                              {{
+                                addContentForm.get("descriptionJa").value
+                                  .length > 60
+                                  ? (addContentForm.get("descriptionJa").value
+                                      | slice : 0 : 60) + "..."
+                                  : addContentForm.get("descriptionJa").value
+                              }}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- ***************upload image************ -->
+
+                <div
+                  class="col-md-6"
+                  [hidden]="
+                    !(
+                      selectedType === 'Articles & Blogs' ||
+                      selectedType === 'Other'
+                    )
+                  "
+                >
+                  <div class="form-group">
+                    <label for="">{{ "content.Videos" | translate }}</label>
+                    <div class="upload-img" (click)="openVideoSelector()">
+                      <i class="fa fa-camera action_btn" aria-hidden="true"></i>
+                      <span class="action_btn" style="cursor: pointer">
+                        {{ "content.UploadVideos" | translate }}</span
+                      >
+                      <input
+                        type="file"
+                        style="display: none"
+                        class="btn chngPic video-upload"
+                        accept="video/*"
+                        name="file"
+                        id="file"
+                        (change)="onVideoSelectorChange($event)"
+                        formControlName="videos"
+                      />
+                    </div>
+                    <div class="row">
+                      <div
+                        class="col-md-12"
+                        *ngFor="
+                          let videoPreview of contentPreviewVideos;
+                          let i = index
+                        "
+                      >
+                        <video
+                          class="preview-video"
+                          preload="metadata"
+                          height="100px"
+                          width="100px"
+                        >
+                          <source [src]="videoPreview" type="video/mp4" />
+                          {{
+                            "content.Yourbrowserdoesnotsupportthevideotag."
+                              | translate
+                          }}
+                        </video>
+                        <em
+                          class="fa fa-times-circle remove_icon"
+                          style="
+                            font-size: 15px;
+                            color: rgb(255, 17, 0);
+                            margin-top: 18px;
+                            position: absolute;
+                            margin-left: -15px;
+                            font-weight: bold;
+                          "
+                          (click)="removeVideo(videoPreview)"
+                        >
+                        </em>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- </div> -->
+
+            <div class="pl-3 mt-3">
+              <p style="color: black">
+                <b>{{ selectedLang === "en" ? "Note:" : "注記:" }}</b>
+                {{ "note.note" | translate }}
+              </p>
+            </div>
+
+            <div
+              class="card-footer footer-btn-block border-0 bg-transparent"
+              style="margin-left: -0.5%"
+            >
+              <button
+                class="btn btn-primary graident btn-small custom-button"
+                [disabled]="isSubmitDisabled()"
+                type="submit"
+                *ngIf="contentId"
+              >
+                {{ "content.Update" | translate }}
+              </button>
+              <button
+                class="btn btn-primary graident btn-small custom-button"
+                [disabled]="isSubmitDisabled()"
+                type="submit"
+                *ngIf="!contentId"
+              >
+                {{ "content.AddContent" | translate }}
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary btn-small custom-button mt-2 mt-sm-0 ml-sm-2"
+                (click)="onCancel()"
+              >
+                {{ "content.Cancel" | translate }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

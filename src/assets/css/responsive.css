@@ -1,0 +1,130 @@
+@media ( max-width :1400px) {
+.w-44 {
+    width: 41%;
+}
+}
+@media ( max-width :1024px) {
+	.fxt-bg-color{padding:30px;}
+
+}
+@media ( max-width :991px) {
+.care-path-right-icon{margin: 0;
+    padding: 0;
+    list-style: none;
+    padding-top: 16px;
+    text-align: center;}
+    .mt-20{margin-top:20px;}
+}
+@media ( max-width :912px) {
+.cd-bot-list li:nth-child(1) {
+    text-align: left;
+}
+}
+@media ( max-width :767px) {
+.range-slider {
+    width: 100%;
+    text-align: center;
+    position: relative;
+}
+.edit-request-box {
+    float: right;
+    width: 90%;
+}
+input[type=range] {
+    -webkit-appearance: none;
+    border: 1px solid white;
+    width: 100%;
+    position: absolute;
+    left: 0;
+}
+.fxt-bg-img{min-height:300px;}
+.fxt-bg-color{min-height:auto; padding-top:8%;}
+.login-bg{background:#e6eded;}
+.fxt-form h2 span {
+    padding: 4px 7px;
+}
+.cd-bot-list li {
+    width: 41%!important;
+    margin: 0 10px!important;
+}
+.cd-bot-list img{width:25%;}
+.cross-top {
+    font-size: 12px!important;
+    top: -14px!important;
+    right: 9px;
+    position: relative;
+}
+.cd-bot-list li:nth-child(1){margin: 0!important;}
+.accordion-wrap {
+    float: right;
+    width: 94%;
+}
+.page-title .title_left {
+    width: 100%;
+    float: none;
+    display: block;
+}
+.page-title{height:auto;padding-bottom:0;}
+.page-title .title_right {
+    display: none;
+}
+.d-list2 ul li {
+    margin: 0 10px 0 0;
+    padding: 0;
+    display: inline-block;
+    width: 40%;
+}
+.tp-img-wrap {
+    float: none;
+    margin-right: 10px;
+}
+.tp-img-txt {
+    float: left;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 5px;
+}
+.pg-logo{text-align:center;}
+.fxt-form.mt-5{margin-top: 2rem!important;}
+}
+@media ( max-width :500px) {
+.accordion-wrap {
+    float: right;
+    width: 90%;
+}
+.edit-req-img {
+    float: left;
+    width: 10%;
+}
+.edit-request-box {
+    float: right;
+    width: 85%;
+}
+.d-list2 ul li {
+    margin: 10px 0;
+    padding: 0;
+    display: block;
+    width: 100%;
+}
+.cd-bot-list li {
+    width: 100%!important;
+    margin: 0 10px!important;
+}
+.cd-bot-list li:nth-child(1) {
+    text-align: left;
+}
+.cd-btn{text-align:center;}
+.cd-btn a{display:block;width:100%;}
+}
+@media ( max-width :420px) {
+.cd-bot-list li {
+    width: 100%!important;
+    margin: 0 5px!important;
+}
+.edit-req-box-txt {
+    float: left;
+    width: 96%;
+    font-size: 16px;
+    color: #424242;
+}	
+}

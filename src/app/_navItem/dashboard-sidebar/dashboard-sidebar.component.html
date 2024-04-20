@@ -1,0 +1,26 @@
+<div class="menu_section">
+  <div class="menu-icon" (click)="toggleClass()">
+    <i class="fa fa-angle-right"></i>
+  </div>
+
+  <ul class="nav side-menu">
+    {{
+      showMenu
+    }}
+
+    <li
+      *ngFor="let sidebarnavItem of sidebarnavItems"
+      routerLinkActive="is-active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <a
+        [routerLink]="[sidebarnavItem.path]"
+        *ngIf="sidebarnavItem.role === role"
+        (click)="toggleClass()"
+      >
+        <i [ngClass]="[sidebarnavItem.icon]"></i>
+        {{ sidebarnavItem.title[selectedLang] }}
+      </a>
+    </li>
+  </ul>
+</div>

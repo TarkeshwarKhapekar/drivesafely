@@ -1,0 +1,369 @@
+<section class="content wh700">
+  <div class="page-title">
+    <div class="title_left">
+      <h2>
+        <b *ngIf="corporateId">{{
+          "corporateUser.EditCorporateUser" | translate
+        }}</b>
+        <b *ngIf="!corporateId">{{
+          "corporateUser.AddCorporateUser" | translate
+        }}</b>
+      </h2>
+    </div>
+    <div class="title_right">
+      <input
+        class="btn btn-primary graident btn-small btn-pad-top-bot-4"
+        type="button"
+        value="{{ 'corporateUser.Back' | translate }}"
+        (click)="goBack()"
+        style="float: right"
+      />
+    </div>
+  </div>
+  <div class="clearfix"></div>
+
+  <div class="pathway-template">
+    <div class="row">
+      <div class="col-12">
+        <form [formGroup]="addCorporateForm" (ngSubmit)="onSubmit()">
+          <div class="container-fluid">
+            <div class="row mt-4">
+              <div class="col-12 col-md-6 col-lg-4">
+                <div class="form-group mb-3">
+                  <label>{{ "corporateUser.Name" | translate }}</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="{{ 'corporateUser.EnterName' | translate }}"
+                    maxlength="20"
+                    formControlName="name"
+                    [ngClass]="{ 'form-submitted': submitted }"
+                  />
+                </div>
+                <span
+                  *ngIf="
+                    submitted ||
+                    (f.name.errors && (f.name.dirty || f.name.touched))
+                  "
+                >
+                  <label
+                    class="text-danger"
+                    *ngIf="addCorporateForm.get('name').hasError('maxlength')"
+                  >
+                    {{
+                      "corporateUser.Corporateusernamemustbeatmost20characterslong."
+                        | translate
+                    }}
+                  </label>
+                  <label
+                    class="text-danger"
+                    *ngIf="addCorporateForm.get('name').hasError('required')"
+                  >
+                    {{
+                      "corporateUser.Corporateusernameisrequired!" | translate
+                    }}
+                  </label>
+                  <label
+                    class="text-danger"
+                    *ngIf="addCorporateForm.get('name').hasError('pattern')"
+                  >
+                    {{ "corporateUser.Enteravalidname!" | translate }}
+                  </label>
+                </span>
+              </div>
+              <div class="col-12 col-md-6 col-lg-4">
+                <div class="form-group mb-3">
+                  <label>{{ "corporateUser.EmailId" | translate }}</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    placeholder="{{ 'corporateUser.EnterEmail' | translate }}"
+                    formControlName="email"
+                    pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+                    [ngClass]="{ 'form-submitted': submitted }"
+                  />
+                </div>
+                <span
+                  *ngIf="
+                    submitted ||
+                    (f.email.errors && (f.email.dirty || f.email.touched))
+                  "
+                >
+                  <label
+                    class="text-danger"
+                    *ngIf="addCorporateForm.get('email').hasError('required')"
+                  >
+                    {{ "corporateUser.EmailisRequired!" | translate }}
+                  </label>
+                  <label
+                    class="text-danger"
+                    *ngIf="addCorporateForm.get('email').hasError('pattern')"
+                  >
+                    {{ "corporateUser.Enteravalidemailaddress!" | translate }}
+                  </label>
+                </span>
+              </div>
+
+              <div class="col-12 col-md-6 col-lg-4">
+                <div class="form-group mb-3">
+                  <label>{{ "corporateUser.PhoneNumber" | translate }}</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="{{
+                      'corporateUser.EnterPhoneNumber' | translate
+                    }}"
+                    pattern="[0-9]*"
+                    minlength="11"
+                    maxlength="11"
+                    formControlName="phone"
+                    [ngClass]="{ 'form-submitted': submitted }"
+                  />
+                </div>
+                <span
+                  *ngIf="
+                    submitted ||
+                    (f.phone.errors && (f.phone.dirty || f.phone.touched))
+                  "
+                >
+                  <label
+                    class="text-danger"
+                    *ngIf="addCorporateForm.get('phone').hasError('minlength')"
+                  >
+                    {{ "corporateUser.PhoneNumbershouldbe10digit" | translate }}
+                  </label>
+                  <label
+                    class="text-danger"
+                    *ngIf="addCorporateForm.get('phone').hasError('required')"
+                  >
+                    {{ "corporateUser.PhoneNumberisrequired!" | translate }}
+                  </label>
+                  <label
+                    class="text-danger"
+                    *ngIf="addCorporateForm.get('phone').hasError('pattern')"
+                  >
+                    {{
+                      "corporateUser.PhoneNumbershouldbeonlynumbers" | translate
+                    }}
+                  </label>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid">
+            <div class="row mt-4">
+              <div class="col-12 col-md-6 col-lg-4">
+                <div class="form-group mb-3">
+                  <label>{{ "corporateUser.Gender" | translate }}</label>
+                  <select
+                    name="gender"
+                    class="form-control"
+                    formControlName="gender"
+                    (change)="onGenderChange($event)"
+                  >
+                    <option selected="selected" value="">
+                      {{ "corporateUser.SelectGender" | translate }}
+                    </option>
+                    <option value="Male">
+                      {{ "corporateUser.Male" | translate }}
+                    </option>
+                    <option value="Female">
+                      {{ "corporateUser.Female" | translate }}
+                    </option>
+                    <option value="Other">
+                      {{ "corporateUser.Other" | translate }}
+                    </option>
+                  </select>
+                </div>
+                <span
+                  *ngIf="
+                    submitted ||
+                    (f.gender.errors && (f.gender.dirty || f.gender.touched))
+                  "
+                >
+                  <label
+                    class="text-danger"
+                    *ngIf="addCorporateForm.get('gender').hasError('required')"
+                  >
+                    {{ "corporateUser.Genderisrequired!" | translate }}
+                  </label>
+                </span>
+              </div>
+              <div class="col-12 col-md-6 col-lg-4" [hidden]="corporateId">
+                <div class="form-group mb-3">
+                  <label>{{
+                    "corporateUser.CreatePassword" | translate
+                  }}</label>
+                  <input
+                    [type]="fieldTextType ? 'text' : 'password'"
+                    type="password"
+                    class="form-control"
+                    formControlName="password"
+                    placeholder="{{
+                      'corporateUser.EnterPassword' | translate
+                    }}"
+                    #password
+                    [ngClass]="{ 'form-submitted': submitted }"
+                    id="password"
+                  />
+                  <i
+                    [ngClass]="{
+                      'fa-eye-slash': !fieldTextType,
+                      'fa-eye': fieldTextType
+                    }"
+                    (click)="toggleFieldTextType()"
+                    class="fas fa-eye-slash"
+                    id="eye"
+                  ></i>
+                </div>
+                <span
+                  *ngIf="
+                    !corporateId &&
+                    (submitted ||
+                      (f.password.errors &&
+                        (f.password.dirty || f.password.touched)))
+                  "
+                >
+                  <label
+                    class="text-danger"
+                    *ngIf="
+                      addCorporateForm.get('password').hasError('required')
+                    "
+                  >
+                    {{ "corporateUser.Passwordisrequired!" | translate }}
+                  </label>
+                  <label
+                    class="text-danger"
+                    *ngIf="addCorporateForm.get('password').hasError('pattern')"
+                  >
+                    {{
+                      "corporateUser.Mustcontainatleastonenumber,oneuppercaseandonelowercaseletter,onespecialcharacter,and atleast8characters."
+                        | translate
+                    }}
+                  </label>
+                </span>
+              </div>
+              <div class="col-12 col-md-6 col-lg-4" *ngIf="!corporateId">
+                <div class="form-group mb-3">
+                  <label>{{
+                    "corporateUser.Re-enterPassword" | translate
+                  }}</label>
+                  <input
+                    [type]="fieldTextType1 ? 'text' : 'password'"
+                    type="password"
+                    class="form-control"
+                    id="confirmPassword"
+                    formControlName="confirmPassword"
+                    placeholder="{{
+                      'corporateUser.EnterConfirmPassword' | translate
+                    }}"
+                    #confirmPassword
+                    (blur)="checkMatch(password.value, confirmPassword.value)"
+                  />
+                  <i
+                    [ngClass]="{
+                      'fa-eye-slash': !fieldTextType1,
+                      'fa-eye': fieldTextType1
+                    }"
+                    (click)="toggleFieldTextType1()"
+                    class="fas fa-eye-slash"
+                    id="eye"
+                  ></i>
+                </div>
+                <div
+                  *ngIf="
+                    addCorporateForm
+                      .get('confirmPassword')
+                      .hasError('required') &&
+                    addCorporateForm.get('confirmPassword').touched
+                  "
+                  class="text-danger"
+                >
+                  {{ "corporateUser.Confirmpasswordisrequired" | translate }}
+                </div>
+                <div
+                  *ngIf="!this.passwordMatched && confirmPassword.value != ''"
+                  class="text-danger"
+                >
+                  {{ "corporateUser.Passwordnotmatched" | translate }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid">
+            <div class="row mt-4">
+              <div class="col-12 col-md-6 col-lg-4">
+                <div class="form-group mb-3">
+                  <label>{{ "corporateUser.CorporateCode" | translate }}</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="corporateCode"
+                    [ngClass]="{ 'form-submitted': submitted }"
+                    placeholder="{{
+                      'corporateUser.EnterBusinessCorporateCode' | translate
+                    }}"
+                  />
+                </div>
+                <span
+                  *ngIf="
+                    submitted ||
+                    (f.corporateCode.errors &&
+                      (f.corporateCode.dirty || f.corporateCode.touched))
+                  "
+                >
+                  <label
+                    class="text-danger"
+                    *ngIf="
+                      addCorporateForm.get('corporateCode').hasError('required')
+                    "
+                  >
+                    {{ "corporateUser.corporateCodeisRequired" | translate }}
+                  </label>
+
+                  <label
+                    class="text-danger"
+                    *ngIf="
+                      addCorporateForm.get('corporateCode').hasError('pattern')
+                    "
+                  >
+                    {{ "corporateUser.Businesscodeshouldbe" | translate }}
+                  </label>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="card-footer footer-btn-block border-0 bg-transparent"
+            style="margin-left: -0.5%"
+          >
+            <button
+              class="btn btn-primary graident btn-small custom-button"
+              [disabled]="addCorporateForm.invalid || !passwordMatched"
+              type="submit"
+              *ngIf="!corporateId"
+            >
+              {{ "corporateUser.AddCorporateUser" | translate }}
+            </button>
+            <button
+              class="btn btn-primary graident btn-small custom-button"
+              [disabled]="isSubmitDisabled()"
+              type="submit"
+              *ngIf="corporateId"
+            >
+              {{ "corporateUser.Update" | translate }}
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary btn-small custom-button mt-2 mt-sm-0 ml-sm-2"
+              (click)="onCancel()"
+            >
+              {{ "corporateUser.Cancel" | translate }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

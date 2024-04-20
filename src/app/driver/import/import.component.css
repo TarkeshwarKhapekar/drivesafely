@@ -1,0 +1,5 @@
+table thead th {
+    position: sticky;
+    background-color: #444;
+    top: -1px;
+}

@@ -1,0 +1,355 @@
+<div class="wh700">
+  <section class="content">
+    <div class="page-title">
+      <div class="title_left">
+        <h2>
+          <b>{{ "content.ContentDetails" | translate }}</b>
+        </h2>
+      </div>
+      <div class="title_right">
+        <input
+          class="btn btn-primary graident btn-small btn-pad-top-bot-4"
+          type="button"
+          value="{{ 'content.Back' | translate }}"
+          (click)="goBack()"
+          style="float: right"
+        />
+      </div>
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="pathway-template">
+      <div class="row">
+        <div class="col-12">
+          <form>
+            <div class="card-body">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-12 col-md-6 col-lg-4">
+                    <div class="form-group mb-3">
+                      <label class="label"
+                        >{{ "content.Type" | translate }} :</label
+                      >
+                      <p>{{ getType(contentDetails?.type) }}</p>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6 col-lg-4">
+                    <div class="form-group mb-3">
+                      <label class="label"
+                        >{{ "content.Title" | translate }} :</label
+                      >
+                      <div class="language-toggle">
+                        <span
+                          (click)="selectLng = 'ja'"
+                          [ngClass]="{ active: selectLng === 'ja' }"
+                          >Jap</span
+                        >
+                        <span
+                          (click)="selectLng = 'en'"
+                          [ngClass]="{ active: selectLng === 'en' }"
+                          >Eng</span
+                        >
+                      </div>
+                      <p>
+                        {{
+                          selectLng === "en"
+                            ? contentDetails?.title.en
+                            : contentDetails?.title.ja
+                        }}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-md-6 col-lg-4">
+                    <div class="form-group mb-3">
+                      <label class="label" *ngIf="contentDetails?.url"
+                        >{{ "content.URL/Link" | translate }} :</label
+                      >
+                      <div>
+                        <a [href]="contentDetails?.url" target="_blank">{{
+                          contentDetails?.url
+                        }}</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-12 col-md-6 col-lg-12">
+                    <div class="form-group mb-3">
+                      <label class="label"
+                        >{{ "content.Description" | translate }} :</label
+                      >
+                      <div class="language-toggle">
+                        <span
+                          (click)="selectedLng = 'ja'"
+                          [ngClass]="{ active: selectedLng === 'ja' }"
+                          >Jap</span
+                        >
+                        <span
+                          (click)="selectedLng = 'en'"
+                          [ngClass]="{ active: selectedLng === 'en' }"
+                          >Eng</span
+                        >
+                      </div>
+                      <p>
+                        {{
+                          selectedLng === "en"
+                            ? contentDetails?.description.en
+                            : contentDetails?.description.ja
+                        }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="container-fluid">
+                <div class="row">
+                  <div
+                    class="col-12 col-md-6 col-lg-6"
+                    *ngIf="contentPreviewImages.length"
+                  >
+                    <div class="form-group mb-3">
+                      <label class="label"
+                        >{{ "content.UploadedImages" | translate }} :</label
+                      >
+                      <div class="row">
+                        <div
+                          class="col-md-6 image_area"
+                          *ngFor="
+                            let previewImage of contentPreviewImages;
+                            let i = index
+                          "
+                        >
+                          <a href="{{ previewImage }}" target="_blank">
+                            <img
+                              class="preview-img"
+                              [src]="previewImage"
+                              alt=""
+                              height="60px"
+                              width="80px"
+                            />
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="col-12 col-md-6 col-lg-6"
+                    *ngIf="contentPreviewVideos.length"
+                  >
+                    <div class="form-group mb-3">
+                      <label class="label"
+                        >{{ "content.UploadedVideos" | translate }}:</label
+                      >
+                      <div class="row">
+                        <div
+                          class="col-md-12"
+                          *ngFor="
+                            let videoPreview of contentPreviewVideos;
+                            let i = index
+                          "
+                        >
+                          <a href="{{ videoPreview }}" target="_blank">
+                            <video
+                              class="preview-video"
+                              preload="metadata"
+                              height="100px"
+                              width="100px"
+                            >
+                              <source [src]="videoPreview" type="video/mp4" />
+                              {{
+                                "content.Yourbrowserdoesnotsupportthevideotag."
+                              }}
+                            </video>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div
+                      id="onlyimgorvdo"
+                      class="mobile-frame-wrapper position-relative"
+                      style="margin-left: -13px"
+                    >
+                      <img
+                        class="img-fluid w-100"
+                        src="../../../assets/img/mobile-frame-media/mobile-frame.png"
+                        alt=""
+                      />
+                      <div
+                        class="content-wrapper position-absolute d-flex flex-column"
+                      >
+                        <div class="status-bar position-absolute">
+                          <img
+                            class="img-fluid"
+                            src="../../../assets/img/mobile-frame-media/mobile-status-bar.svg"
+                            alt=""
+                          />
+                        </div>
+                        <header class="mobile-head">
+                          <div class="logo-cell">
+                            <img
+                              class="img-fluid"
+                              src="../../../assets/img/mobile-frame-media/logo.png"
+                              alt="Logo"
+                            />
+                          </div>
+                        </header>
+                        <div class="media-grid mt-auto">
+                          <div class="row">
+                            <!-- For Images only -->
+                            <div
+                              class="col-sm-6"
+                              *ngIf="contentPreviewImages[0]"
+                            >
+                              <img
+                                [src]="contentPreviewImages[0]"
+                                alt="gallery-pic"
+                              />
+                            </div>
+                            <div
+                              class="col-sm-6"
+                              *ngIf="contentPreviewImages[1]"
+                            >
+                              <img
+                                [src]="contentPreviewImages[1]"
+                                alt="gallery-pic"
+                              />
+                            </div>
+                            <div
+                              class="col-sm-4"
+                              *ngIf="contentPreviewImages[2]"
+                            >
+                              <img
+                                [src]="contentPreviewImages[2]"
+                                alt="gallery-pic"
+                              />
+                            </div>
+                            <div
+                              class="col-sm-4"
+                              *ngIf="contentPreviewImages[3]"
+                            >
+                              <img
+                                [src]="contentPreviewImages[3]"
+                                alt="gallery-pic"
+                              />
+                            </div>
+                            <div
+                              class="col-sm-4"
+                              *ngIf="contentPreviewImages[4]"
+                            >
+                              <img
+                                [src]="contentPreviewImages[4]"
+                                alt="gallery-pic"
+                              />
+                              <div
+                                *ngIf="contentPreviewImages.length > 5"
+                                class="image-count position-absolute d-inline-flex align-items-center justify-content-center"
+                              >
+                                +{{ contentPreviewImages.length - 5 }}
+                              </div>
+                            </div>
+
+                            <!-- For videos only -->
+
+                            <div
+                              class="col-sm-6"
+                              *ngIf="
+                                contentPreviewVideos[0] &&
+                                contentPreviewImages.length < 5
+                              "
+                            >
+                              <video
+                                [src]="contentPreviewVideos[0]"
+                                style="height: 60px; width: 60px"
+                              ></video>
+                            </div>
+                            <div
+                              class="col-sm-6"
+                              *ngIf="
+                                contentPreviewVideos[1] &&
+                                contentPreviewImages.length < 4
+                              "
+                            >
+                              <video
+                                [src]="contentPreviewVideos[1]"
+                                style="height: 60px; width: 60px"
+                              ></video>
+                            </div>
+                            <div
+                              class="col-sm-4"
+                              *ngIf="
+                                contentPreviewVideos[2] &&
+                                contentPreviewImages.length < 3
+                              "
+                            >
+                              <video
+                                [src]="contentPreviewVideos[2]"
+                                style="height: 60px; width: 60px"
+                              ></video>
+                            </div>
+                            <div
+                              class="col-sm-4"
+                              *ngIf="
+                                contentPreviewVideos[3] &&
+                                contentPreviewImages.length < 2
+                              "
+                            >
+                              <video
+                                [src]="contentPreviewVideos[3]"
+                                style="height: 60px; width: 60px"
+                              ></video>
+                            </div>
+                            <div
+                              class="col-sm-4"
+                              *ngIf="
+                                contentPreviewVideos[4] &&
+                                contentPreviewImages.length < 1
+                              "
+                            >
+                              <video
+                                [src]="contentPreviewVideos[4]"
+                                style="height: 60px; width: 60px"
+                              ></video>
+                              <div
+                                *ngIf="contentPreviewVideos.length > 5"
+                                class="image-count position-absolute d-inline-flex align-items-center justify-content-center"
+                              >
+                                +{{ contentPreviewVideos.length - 5 }}
+                              </div>
+                            </div>
+                            <div class="media-txt">
+                              <h6>
+                                {{
+                                  selectLng === "en"
+                                    ? contentDetails?.title.en
+                                    : contentDetails?.title.ja
+                                }}
+                              </h6>
+                              <p>
+                                {{
+                                  selectedLng === "en"
+                                    ? contentDetails?.description.en
+                                    : contentDetails?.description.ja
+                                }}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,333 @@
+<div class="content wh700">
+  <div class="page-title">
+    <div class="title_left">
+      <h3>
+        <b>{{ "corporateUser.CorporateUser" | translate }}</b>
+      </h3>
+    </div>
+    <div class="title_right">
+      <input
+        class="btn btn-primary graident btn-small btn-pad-top-bot-4"
+        type="button"
+        value="{{ 'corporateUser.Back' | translate }}"
+        (click)="goBack()"
+        style="float: right"
+      />
+    </div>
+  </div>
+  <div class="clearfix"></div>
+  <div class="pathway-template">
+    <div class="container">
+      <div class="main-sorting-header">
+        <div class="sorting-block">
+          <div class="select-block">
+            <angular2-multiselect
+              [data]="dropdownList"
+              [(ngModel)]="selectedItems"
+              [settings]="dropdownSettings"
+              (onSelect)="onItemSelect($event)"
+              (onDeSelect)="OnItemDeSelect($event)"
+              (onSelectAll)="onSelectAll($event)"
+              (onDeSelectAll)="onDeSelectAll($event)"
+            ></angular2-multiselect>
+          </div>
+          <div class="search-block">
+            <div class="input-group add-on mb-0">
+              <button class="btn btn-default srch-icon" type="submit">
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </button>
+              <input
+                class="form-control"
+                placeholder="{{
+                  'corporateUser.SearchCorporatebyNameandCorporateCode'
+                    | translate
+                }}"
+                name="srch-term"
+                id="srch-term"
+                type="text"
+                [(ngModel)]="filterTerm"
+                autocomplete="off"
+                (keyup)="getCorporateUserList()"
+              />
+              <div class="input-group-btn"></div>
+            </div>
+          </div>
+        </div>
+        <div class="sorting-button">
+          <a
+            [routerLink]="['/DS/corporate/user/corporate-add']"
+            class="btn-login btn btn-primary btn-block btn-pad-top-bot-4"
+            ><i class="fa-solid fa-circle-plus"></i>
+            {{ "corporateUser.AddCorporateUser" | translate }}</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Table-->
+
+  <div class="pathway-template">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-lg-12">
+          <div class="table-responsive">
+            <table
+              datatable
+              [dtOptions]="dtOptions"
+              [dtTrigger]="dtTrigger"
+              class="table table-bordered table-sm table-striped table-hover dt-responsive nowrap"
+              style="width: 100%"
+            >
+              <thead>
+                <tr>
+                  <th
+                    class="text-center"
+                    (click)="toggleSortDirection(); sort('name')"
+                  >
+                    <div class="sort-cell-wrapper d-flex">
+                      {{ "corporateUser.Name" | translate }}
+                      <span
+                        class="sort-cell d-inline-flex flex-column justify-content-center"
+                      >
+                        <span *ngIf="!isAscending" class="up">
+                          <img
+                            class="img-fluid"
+                            src="../../../assets/img/arrow_drop_up.svg"
+                            alt="arrow-up"
+                          />
+                        </span>
+                        <span *ngIf="isAscending" class="down">
+                          <img
+                            class="img-fluid"
+                            src="../../../assets/img/arrow_drop_down.svg"
+                            alt="arrow-down"
+                          />
+                        </span>
+                      </span>
+                    </div>
+                  </th>
+                  <th
+                    class="text-center"
+                    (click)="toggleSortDirection1(); sort('gender')"
+                  >
+                    <div class="sort-cell-wrapper d-flex">
+                      {{ "corporateUser.Gender" | translate }}
+                      <span
+                        class="sort-cell d-inline-flex flex-column justify-content-center"
+                      >
+                        <span *ngIf="!isAscending1" class="up">
+                          <img
+                            class="img-fluid"
+                            src="../../../assets/img/arrow_drop_up.svg"
+                            alt="arrow-up"
+                          />
+                        </span>
+                        <span *ngIf="isAscending1" class="down">
+                          <img
+                            class="img-fluid"
+                            src="../../../assets/img/arrow_drop_down.svg"
+                            alt="arrow-down"
+                          />
+                        </span>
+                      </span>
+                    </div>
+                  </th>
+                  <th
+                    class="text-center"
+                    (click)="toggleSortDirection2(); sort('email')"
+                  >
+                    <div class="sort-cell-wrapper d-flex">
+                      {{ "corporateUser.EmailId" | translate }}
+                      <span
+                        class="sort-cell d-inline-flex flex-column justify-content-center"
+                      >
+                        <span *ngIf="!isAscending2" class="up">
+                          <img
+                            class="img-fluid"
+                            src="../../../assets/img/arrow_drop_up.svg"
+                            alt="arrow-up"
+                          />
+                        </span>
+                        <span *ngIf="isAscending2" class="down">
+                          <img
+                            class="img-fluid"
+                            src="../../../assets/img/arrow_drop_down.svg"
+                            alt="arrow-down"
+                          />
+                        </span>
+                      </span>
+                    </div>
+                  </th>
+                  <th
+                    class="text-center"
+                    (click)="toggleSortDirection3(); sort('phone')"
+                  >
+                    <div class="sort-cell-wrapper d-flex">
+                      {{ "corporateUser.Phone" | translate }}
+                      <span
+                        class="sort-cell d-inline-flex flex-column justify-content-center"
+                      >
+                        <span *ngIf="!isAscending3" class="up">
+                          <img
+                            class="img-fluid"
+                            src="../../../assets/img/arrow_drop_up.svg"
+                            alt="arrow-up"
+                          />
+                        </span>
+                        <span *ngIf="isAscending3" class="down">
+                          <img
+                            class="img-fluid"
+                            src="../../../assets/img/arrow_drop_down.svg"
+                            alt="arrow-down"
+                          />
+                        </span>
+                      </span>
+                    </div>
+                  </th>
+                  <th
+                    class="text-center"
+                    (click)="toggleSortDirection4(); sort('date_registered')"
+                  >
+                    <div class="sort-cell-wrapper d-flex">
+                      {{ "corporateUser.RegisteredDate" | translate }}
+                      <span
+                        class="sort-cell d-inline-flex flex-column justify-content-center"
+                      >
+                        <span *ngIf="!isAscending4" class="up">
+                          <img
+                            class="img-fluid"
+                            src="../../../assets/img/arrow_drop_up.svg"
+                            alt="arrow-up"
+                          />
+                        </span>
+                        <span *ngIf="isAscending4" class="down">
+                          <img
+                            class="img-fluid"
+                            src="../../../assets/img/arrow_drop_down.svg"
+                            alt="arrow-down"
+                          />
+                        </span>
+                      </span>
+                    </div>
+                  </th>
+                  <th
+                    class="text-center"
+                    (click)="toggleSortDirection5(); sort('corporateCode')"
+                  >
+                    <div class="sort-cell-wrapper d-flex">
+                      {{ "corporateUser.CorporateCode" | translate }}
+                      <span
+                        class="sort-cell d-inline-flex flex-column justify-content-center"
+                      >
+                        <span *ngIf="!isAscending5" class="up">
+                          <img
+                            class="img-fluid"
+                            src="../../../assets/img/arrow_drop_up.svg"
+                            alt="arrow-up"
+                          />
+                        </span>
+                        <span *ngIf="isAscending5" class="down">
+                          <img
+                            class="img-fluid"
+                            src="../../../assets/img/arrow_drop_down.svg"
+                            alt="arrow-down"
+                          />
+                        </span>
+                      </span>
+                    </div>
+                  </th>
+                  <th class="text-center">
+                    {{ "corporateUser.Action" | translate }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="
+                    let element of corporateUserList
+                      | paginate
+                        : {
+                            itemsPerPage: count,
+                            currentPage: page,
+                            id: 'second',
+                            totalItems: totaldocs
+                          }
+                  "
+                ></tr>
+                <tr
+                  *ngFor="
+                    let element of corporateUserList | filter : filterTerm
+                  "
+                >
+                  <td>{{ element.name }}</td>
+                  <td>{{ getGender(element.gender) }}</td>
+                  <td>{{ element.email }}</td>
+                  <td>{{ element.phone }}</td>
+                  <td>{{ element.date_registered | date : "yyyy/MM/dd" }}</td>
+                  <td>{{ element.corporateCode }}</td>
+                  <td class="text-center">
+                    <ul class="care-path-right-icon pt-0">
+                      <li>
+                        <a
+                          [routerLink]="[
+                            '/DS/corporate/user/corporate-view',
+                            element._id
+                          ]"
+                          ><i class="fa-solid fa-eye" title="View"></i
+                        ></a>
+                      </li>
+                      <li>
+                        <a
+                          [routerLink]="[
+                            '/DS/corporate/user/corporate-edit',
+                            element._id
+                          ]"
+                          title="Edit"
+                          ><i class="fa-solid fa-pencil"></i
+                        ></a>
+                      </li>
+                      <li>
+                        <a (click)="corporateDelete(element._id)" title="Delete"
+                          ><i class="fa-solid fa-trash-can"></i
+                        ></a>
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="text-center" *ngIf="totaldocs == 0">
+              {{ "common.NoResultsFound" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="totaldocs > 10">
+        <div class="col-sm-6 text-left">
+          <pagination-controls
+            (pageChange)="pageChange($event)"
+            id="second"
+            previousLabel="{{ 'corporateUser.Previous' | translate }}"
+            nextLabel="{{ 'corporateUser.Next' | translate }}"
+          >
+          </pagination-controls>
+        </div>
+        <div class="col-sm-6 text-right" *ngIf="totaldocs > 10">
+          <label for="entries"
+            >{{ "corporateUser.NumberofEntries" | translate }} :&nbsp;</label
+          >
+          <select
+            id="entries"
+            [(ngModel)]="count"
+            (ngModelChange)="getCorporateUserList(1)"
+          >
+            <option value="10" *ngIf="totaldocs >= 10">10</option>
+            <option value="20" *ngIf="totaldocs >= 20">20</option>
+            <option value="30" *ngIf="totaldocs >= 30">30</option>
+            <option value="40" *ngIf="totaldocs >= 40">40</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

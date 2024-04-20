@@ -1,0 +1,119 @@
+<div class="wh700">
+  <div class="page-title">
+    <div class="title_left">
+      <h3>
+        <b>{{ "driver.DriverDetails" | translate }}</b>
+      </h3>
+    </div>
+    <div class="title_right">
+      <input
+        class="btn btn-primary graident btn-small btn-pad-top-bot-4"
+        type="button"
+        value="{{ 'driver.Back' | translate }}"
+        (click)="goBack()"
+        style="float: right"
+      />
+    </div>
+  </div>
+
+  <div class="clearfix"></div>
+
+  <div class="pathway-template">
+    <div class="row">
+      <div class="col-12">
+        <form>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12">
+                <h4 class="fs-20 fw-bold"></h4>
+              </div>
+            </div>
+
+            <div class="row mt-4">
+              <div class="col-12 col-md-4 col-lg-4">
+                <div class="form-group mb-3">
+                  <label
+                    ><b>{{ "driver.DriverName" | translate }}</b></label
+                  >
+                  <p>{{ driverDetails?.name }}</p>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-4 col-lg-4">
+                <div class="form-group mb-3">
+                  <label
+                    ><b>{{ "driver.EmailId" | translate }}</b></label
+                  >
+                  <p>{{ driverDetails?.email }}</p>
+                </div>
+              </div>
+              <div class="col-12 col-md-4 col-lg-4">
+                <div class="form-group mb-3">
+                  <label
+                    ><b>{{ "driver.PhoneNumber" | translate }}</b></label
+                  >
+                  <p>{{ driverDetails?.phone }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mt-4">
+              <div class="col-12 col-md-4 col-lg-4">
+                <div class="form-group mb-3">
+                  <label
+                    ><b>{{ "driver.Gender" | translate }}</b></label
+                  >
+                  <p>
+                    {{ getGender(driverDetails.gender) }}
+                  </p>
+                </div>
+              </div>
+              <div class="col-12 col-md-4 col-lg-4">
+                <div class="form-group mb-3">
+                  <label
+                    ><b>{{ "driver.CorporateCode" | translate }}</b></label
+                  >
+                  <p>{{ driverDetails?.corporateCode }}</p>
+                </div>
+              </div>
+              <div class="col-12 col-md-4 col-lg-4">
+                <div class="form-group mb-3">
+                  <label
+                    ><b>{{ "driver.YearofBirth" | translate }}</b></label
+                  >
+                  <p>{{ driverDetails?.yearOfBirth }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-4">
+              <div class="col-12 col-md-4 col-lg-4">
+                <div class="form-group mb-3">
+                  <label
+                    ><b>{{ "driver.RestingHeartRate" | translate }}</b></label
+                  >
+                  <p>{{ driverDetails?.restingHeartRate }}</p>
+                </div>
+              </div>
+              <div class="col-12 col-md-4 col-lg-4">
+                <div class="form-group mb-3">
+                  <label
+                    ><b>{{ "driver.RingUse" | translate }}</b></label
+                  >
+                  <p>{{ driverDetails?.ringUse ? "Yes" : "No" }}</p>
+                </div>
+              </div>
+              <div class="col-12 col-md-4 col-lg-4">
+                <div class="form-group mb-3" *ngIf="driverDetails.ringUse">
+                  <label
+                    ><b>{{ "driver.RingId" | translate }}</b></label
+                  >
+                  <p>{{ driverDetails?.ringId }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

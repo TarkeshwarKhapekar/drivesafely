@@ -1,0 +1,37 @@
+.custom-input {
+    width: 200px; /* Adjust the width value as per your requirements */
+  }
+
+  #eye {
+    cursor: pointer;
+    position: absolute;
+    top: 40px;
+    right: 20px;
+    font-size: 14px;
+  }
+
+  label{
+    margin-bottom: 10px;
+  }
+
+
+
+
+
+/*swami*/
+
+
+
+
+button,
+.buttons,
+.btn,
+.modal-footer .btn+.btn {
+  margin-bottom: 1px;
+
+  margin-right: 0px;
+}
+
+.footer-btn-block {
+  display: block;
+}

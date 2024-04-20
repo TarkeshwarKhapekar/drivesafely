@@ -1,0 +1,429 @@
+<div class="wh700">
+  <div class="page-title">
+    <div class="title_left">
+      <h3>
+        <b *ngIf="configId">{{ "config.EditConfig" | translate }}</b>
+        <b *ngIf="!configId">{{ "config.AddConfig" | translate }}</b>
+      </h3>
+    </div>
+    <div class="title_right">
+      <input
+        class="btn btn-primary graident btn-small btn-pad-top-bot-4"
+        type="button"
+        value="{{ 'config.Back' | translate }}"
+        (click)="goBack()"
+        style="float: right"
+      />
+    </div>
+  </div>
+  <div class="clearfix"></div>
+
+  <div class="pathway-template">
+    <div class="row">
+      <div class="col-12">
+        <form [formGroup]="addConfigForm" (ngSubmit)="onSubmit()">
+          <div class="container-fluid">
+            <div class="row mt-4">
+              <div class="col-12 col-md-6 col-lg-4">
+                <div class="form-group mb-3">
+                  <label class="label">{{
+                    "config.MinimumValue" | translate
+                  }}</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="{{ 'config.EnterMinimumValue' | translate }}"
+                    maxlength="10"
+                    formControlName="min_value"
+                    [ngClass]="{ 'form-submitted': submitted }"
+                  />
+                </div>
+                <span
+                  *ngIf="
+                    submitted ||
+                    (f.min_value.errors &&
+                      (f.min_value.dirty || f.min_value.touched))
+                  "
+                >
+                  <label
+                    class="text-danger"
+                    *ngIf="addConfigForm.get('min_value').hasError('required')"
+                  >
+                    {{ "config.Min.valueisrequired!" | translate }}
+                  </label>
+                </span>
+              </div>
+              <div class="col-12 col-md-6 col-lg-4">
+                <div class="form-group mb-3">
+                  <label class="label">{{
+                    "config.MaximumValue" | translate
+                  }}</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="{{ 'config.EnterMaximumValue' | translate }}"
+                    formControlName="max_value"
+                  />
+                </div>
+                <span
+                  *ngIf="
+                    submitted ||
+                    (f.max_value.errors &&
+                      (f.max_value.dirty || f.max_value.touched))
+                  "
+                >
+                  <label
+                    class="text-danger"
+                    *ngIf="addConfigForm.get('max_value').hasError('required')"
+                  >
+                    {{ "config.Max.valueisrequired!" | translate }}
+                  </label>
+                </span>
+              </div>
+              <div class="col-12 col-md-6 col-lg-4">
+                <div class="form-group mb-3">
+                  <label class="label">{{
+                    "config.ColorCode" | translate
+                  }}</label>
+                  <input
+                    type="color"
+                    class="form-control"
+                    placeholder="{{ 'config.EnterColorCode' | translate }}"
+                    formControlName="colorCode"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid">
+            <div class="row mt-4">
+              <div class="col-12 col-md-6 col-lg-6">
+                <div class="form-group mb-3">
+                  <label>{{ "config.Level" | translate }}</label>
+                  <div class="language-toggle">
+                    <span
+                      (click)="selectedLng = 'ja'"
+                      [ngClass]="{ active: selectedLng === 'ja' }"
+                      >Jap</span
+                    >
+                    <span
+                      (click)="selectedLng = 'en'"
+                      [ngClass]="{ active: selectedLng === 'en' }"
+                      >Eng</span
+                    >
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control mt-2"
+                    placeholder="{{ 'config.EnterLevel' | translate }}"
+                    formControlName="level"
+                    [hidden]="selectedLng !== 'en'"
+                    *ngIf="!this.configId"
+                  />
+                  <input
+                    type="text"
+                    class="form-control mt-2"
+                    placeholder="{{ 'config.EnterLevel' | translate }}"
+                    formControlName="level"
+                    [hidden]="selectedLng !== 'en'"
+                    readonly
+                    *ngIf="this.configId"
+                  />
+
+                  <input
+                    type="text"
+                    class="form-control mt-2"
+                    placeholder="質問を入力してください"
+                    formControlName="levelJa"
+                    [hidden]="selectedLng !== 'ja'"
+                    *ngIf="!this.configId"
+                  />
+
+                  <input
+                    type="text"
+                    class="form-control mt-2"
+                    placeholder="質問を入力してください"
+                    formControlName="levelJa"
+                    [hidden]="selectedLng !== 'ja'"
+                    readonly
+                    *ngIf="this.configId"
+                  />
+
+                  <span
+                    *ngIf="
+                      submitted ||
+                      (f.level.errors && (f.level.dirty || f.level.touched)) ||
+                      (f.levelJa.errors &&
+                        (f.levelJa.dirty || f.levelJa.touched))
+                    "
+                  >
+                    <label
+                      class="text-danger"
+                      *ngIf="
+                        selectedLng == 'en' &&
+                        addConfigForm.get('level').hasError('required')
+                      "
+                    >
+                      {{ "config.Levelisrequired!" | translate }}
+                    </label>
+                    <label
+                      class="text-danger"
+                      *ngIf="
+                        selectedLng == 'ja' &&
+                        addConfigForm.get('levelJa').hasError('required')
+                      "
+                    >
+                      {{ "config.Levelisrequired!" | translate }}
+                    </label>
+                  </span>
+                </div>
+              </div>
+              <div class="col-12 col-md-6 col-lg-6">
+                <div class="form-group mb-3">
+                  <label>{{ "config.Title" | translate }}</label>
+                  <div class="language-toggle">
+                    <span
+                      (click)="selectsLng = 'ja'"
+                      [ngClass]="{ active: selectsLng === 'ja' }"
+                      >Jap</span
+                    >
+                    <span
+                      (click)="selectsLng = 'en'"
+                      [ngClass]="{ active: selectsLng === 'en' }"
+                      >Eng</span
+                    >
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control mt-2"
+                    placeholder="{{ 'config.EnterTitle' | translate }}"
+                    formControlName="title"
+                    [hidden]="selectsLng !== 'en'"
+                  />
+
+                  <input
+                    type="text"
+                    class="form-control mt-2"
+                    placeholder="質問を入力してください"
+                    formControlName="titleJa"
+                    [hidden]="selectsLng !== 'ja'"
+                  />
+
+                  <span
+                    *ngIf="
+                      submitted ||
+                      (f.title.errors && (f.title.dirty || f.title.touched)) ||
+                      (f.titleJa.errors &&
+                        (f.titleJa.dirty || f.titleJa.touched))
+                    "
+                  >
+                    <label
+                      class="text-danger"
+                      *ngIf="
+                        selectsLng == 'en' &&
+                        addConfigForm.get('title').hasError('required')
+                      "
+                    >
+                      {{ "config.Titleisrequired!" | translate }}
+                    </label>
+                    <label
+                      class="text-danger"
+                      *ngIf="
+                        selectsLng == 'ja' &&
+                        addConfigForm.get('titleJa').hasError('required')
+                      "
+                    >
+                      {{ "config.Titleisrequired!" | translate }}
+                    </label>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid">
+            <div class="row mt-4">
+              <div class="col-12 col-md-6 col-lg-12">
+                <div class="form-group mb-3">
+                  <label>{{ "config.Description" | translate }}</label>
+                  <div class="language-toggle">
+                    <span
+                      (click)="selectLng = 'ja'"
+                      [ngClass]="{ active: selectLng === 'ja' }"
+                      >Jap</span
+                    >
+                    <span
+                      (click)="selectLng = 'en'"
+                      [ngClass]="{ active: selectLng === 'en' }"
+                      >Eng</span
+                    >
+                  </div>
+                  <textarea
+                    rows="2"
+                    type="text"
+                    class="form-control mt-2"
+                    placeholder="{{ 'config.EnterDescription' | translate }}"
+                    [ngClass]="{ 'form-submitted': submitted }"
+                    formControlName="description"
+                    [hidden]="selectLng !== 'en'"
+                  ></textarea>
+
+                  <span
+                    *ngIf="
+                      submitted ||
+                      (f.description.errors &&
+                        (f.description.dirty || f.description.touched)) ||
+                      (f.descriptionJa.errors &&
+                        (f.descriptionJa.dirty || f.descriptionJa.touched))
+                    "
+                  >
+                    <label
+                      class="text-danger"
+                      *ngIf="
+                        selectLng == 'en' &&
+                        addConfigForm.get('description').hasError('required')
+                      "
+                    >
+                      {{ "config.Descriptionisrequired!" | translate }}
+                    </label>
+                    <label
+                      class="text-danger"
+                      *ngIf="
+                        selectLng == 'ja' &&
+                        addConfigForm.get('descriptionJa').hasError('required')
+                      "
+                    >
+                      {{ "config.Descriptionisrequired!" | translate }}
+                    </label>
+                  </span>
+                  <textarea
+                    type="text"
+                    rows="2"
+                    class="form-control mt-2"
+                    placeholder="質問を入力してください"
+                    formControlName="descriptionJa"
+                    [hidden]="selectLng !== 'ja'"
+                  >
+                  </textarea>
+
+                  <span
+                    *ngIf="
+                      addConfigForm.get('level').value == 'Level 1' ||
+                      addConfigForm.get('level').value == 'Level 2' ||
+                      addConfigForm.get('level').value == 'Level 3'
+                    "
+                  >
+                    <label style="margin-top: 10px">{{
+                      "config.commentSleepiness" | translate
+                    }}</label>
+                    <input
+                      type="text"
+                      class="form-control mt-2"
+                      placeholder="眠気のコメントを入力します。"
+                      formControlName="caseSleepinessJa"
+                      [hidden]="selectLng !== 'ja'"
+                    />
+                    <input
+                      type="text"
+                      class="form-control mt-2"
+                      placeholder="Enter a comment for sleepiness"
+                      formControlName="caseSleepiness"
+                      [hidden]="selectLng !== 'en'"
+                    />
+                    <label style="margin-top: 10px">{{
+                      "config.commentExercise" | translate
+                    }}</label>
+                    <input
+                      type="text"
+                      class="form-control mt-2"
+                      placeholder="演習のコメントを入力してください"
+                      formControlName="caseExerciseJa"
+                      [hidden]="selectLng !== 'ja'"
+                    />
+                    <input
+                      type="text"
+                      class="form-control mt-2"
+                      placeholder="Enter a comment for exercise"
+                      formControlName="caseExercise"
+                      [hidden]="selectLng !== 'en'"
+                    />
+
+                    <label style="margin-top: 10px">{{
+                      "config.commentStress" | translate
+                    }}</label>
+                    <input
+                      type="text"
+                      class="form-control mt-2"
+                      placeholder="ストレスに関するコメントを入力してください"
+                      formControlName="caseStressJa"
+                      [hidden]="selectLng !== 'ja'"
+                    />
+                    <input
+                      type="text"
+                      class="form-control mt-2"
+                      placeholder="Enter a comment for stress"
+                      formControlName="caseStress"
+                      [hidden]="selectLng !== 'en'"
+                    />
+                    <label style="margin-top: 10px">{{
+                      "config.commentReflex" | translate
+                    }}</label>
+                    <input
+                      type="text"
+                      class="form-control mt-2"
+                      placeholder="Reflex のコメントを入力してください"
+                      formControlName="caseReflexJa"
+                      [hidden]="selectLng !== 'ja'"
+                    />
+                    <input
+                      type="text"
+                      class="form-control mt-2"
+                      placeholder="Enter a comment for Reflex"
+                      formControlName="caseReflex"
+                      [hidden]="selectLng !== 'en'"
+                    />
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pl-3 mt-3">
+            <p style="color: black">
+              <b>{{ selectedLang === "en" ? "Note:" : "注記:" }}</b>
+              {{ "note.note" | translate }}
+            </p>
+          </div>
+
+          <div
+            class="card-footer footer-btn-block border-0 bg-transparent"
+            style="margin-left: -0.5%"
+          >
+            <button
+              class="btn btn-primary graident btn-small custom-button"
+              [disabled]="isSubmitDisabled()"
+              type="submit"
+              *ngIf="configId"
+            >
+              {{ "config.Update" | translate }}
+            </button>
+            <button
+              class="btn btn-primary graident btn-small custom-button"
+              [disabled]="isSubmitDisabled()"
+              type="submit"
+              *ngIf="!configId"
+            >
+              {{ "config.AddConfig" | translate }}
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary btn-small custom-button mt-2 mt-sm-0 ml-sm-2"
+              (click)="onCancel()"
+            >
+              {{ "config.Cancel" | translate }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,171 @@
+<div class="wh700">
+  <div class="page-title">
+    <div class="title_left">
+      <h2>
+        <b>
+          {{ "driver.ImportDrivers" | translate }}
+        </b>
+      </h2>
+    </div>
+    <div class="title_right">
+      <input
+        class="btn btn-primary graident btn-small btn-pad-top-bot-4"
+        type="button"
+        value="{{ 'driver.Back' | translate }}"
+        (click)="goBack()"
+        style="float: right"
+      />
+    </div>
+  </div>
+  <div class="clearfix"></div>
+
+  <div class="pathway-template">
+    <div class="row">
+      <div class="col-12">
+        <form [formGroup]="addDriverForm">
+          <!-- <div class="card-body"> -->
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12">
+                <h4 class="fs-20 fw-bold"></h4>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group mb-3">
+                  <label>{{ "driver.selectCSV" | translate }} </label>
+                  <!-- <label>{{ "driver.DriverName" | translate }}</label> -->
+                  <!-- <p translate='driver.DriverName'></p> -->
+                  <!-- "{{ 'driver.EnterName' | translate }}" -->
+                  <input
+                    type="file"
+                    class="form-control"
+                    placeholder="ChooseFile"
+                    (change)="onFileSelected($event)"
+                    formControlName="csvFile"
+                    style="width: 500px; padding-bottom: 33px"
+                    accept=".csv"
+                  />
+                  <!-- <input 
+                    type="file"
+                    class="form-control"
+                    placeholder="ファイルを選ぶ"
+                    (change)="onFileSelected($event)"
+                    formControlName="csvFile"  *ngIf="selectedLang == 'ja'"
+                  /> -->
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 info" *ngIf="selectedLang == 'en'">
+                Ensure the CSV data is correctly formatted and includes all
+                required fields.
+              </div>
+              <div class="col-12 info" *ngIf="selectedLang == 'ja'">
+                CSV
+                データが正しくフォーマットされており、必須フィールドがすべて含まれていることを確認してください。
+              </div>
+            </div>
+            <div class="row">
+              <div
+                class="card-footer border-0 bg-transparent"
+                style="margin-left: -0.6%"
+              >
+                <button
+                  class="btn btn-primary graident btn-small custom-button"
+                  [disabled]="addDriverForm.invalid"
+                  (click)="onSubmit()"
+                >
+                  {{ "driver.Import" | translate }}
+                </button>
+
+                <button
+                  type="button"
+                  class="btn btn-secondary btn-small custom-button ml-2"
+                  (click)="onCancel()"
+                >
+                  {{ "driver.Cancel" | translate }}
+                </button>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12 col-md-6 col-lg-4">
+                <div
+                  style="height: 300px; width: 600px; overflow-y: auto"
+                  *ngIf="validUsers.length > 0"
+                >
+                  <label *ngIf="validUsers.length > 0" class="text-info">
+                    {{ "driver.importedSucess" | translate }}
+                  </label>
+                  <table
+                    class="table table-bordered dt-responsive"
+                    style="width: 100%"
+                  >
+                    <thead>
+                      <tr>
+                        <th>{{ "driver.No" | translate }}</th>
+                        <th>{{ "driver.Name" | translate }}</th>
+                        <th>{{ "driver.EmailId" | translate }}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- You can add rows and data here -->
+                      <tr *ngFor="let element of validUsers; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ element?.name }}</td>
+                        <td>{{ element?.email }}</td>
+                      </tr>
+                      <!-- Add more rows as needed -->
+                    </tbody>
+                  </table>
+                </div>
+                <div *ngIf="invalidUsers.length > 0" class="mb-3">
+                  <label class="text-danger">
+                    {{ "driver.importedFailed" | translate }}
+                  </label>
+                </div>
+                <div
+                  style="height: 300px; width: 600px; overflow-y: auto"
+                  *ngIf="invalidUsers.length > 0"
+                >
+                  <table
+                    class="table table-bordered dt-responsive"
+                    style="width: 100%"
+                  >
+                    <thead>
+                      <tr>
+                        <th>{{ "driver.No" | translate }}</th>
+                        <th>{{ "driver.Name" | translate }}</th>
+                        <th>{{ "driver.EmailId" | translate }}</th>
+                        <th>{{ "driver.Comment" | translate }}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- You can add rows and data here -->
+                      <tr *ngFor="let element of invalidUsers; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ element?.name }}</td>
+                        <td>{{ element?.email }}</td>
+                        <td *ngIf="this.selectedLang == 'en'">
+                          {{ element?.error }}
+                        </td>
+                        <td *ngIf="this.selectedLang == 'ja'">
+                          {{ element?.errorJa }}
+                        </td>
+                      </tr>
+
+                      <!-- Add more rows as needed -->
+                    </tbody>
+                  </table>
+                </div>
+                <!-- <div>Note: Please check CSV field's for Invalid users</div> -->
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

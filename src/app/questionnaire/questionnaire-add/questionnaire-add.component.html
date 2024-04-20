@@ -1,0 +1,258 @@
+<section class="content px-5 py-4" style="min-height: 548px">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-8">
+        <h2 *ngIf="!this.questionnairedId">
+          <b>Add Question</b>
+        </h2>
+        <h2 *ngIf="this.questionnairedId"><b>Update Question</b></h2>
+      </div>
+      <div class="title_right">
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a [routerLink]="['/DS/questionnaire']">
+                Aptitude Questionnaire</a
+              >
+              > {{ questionnairedId ? "Update Question" : "Add Question" }}
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card border-0 shadow">
+          <form [formGroup]="questionForm">
+            <div formArrayName="questionObj">
+              <div
+                class="row mt-3"
+                *ngFor="
+                  let question of questionObjArr().controls;
+                  last as isLast;
+                  let questionIndex = index
+                "
+                [formGroupName]="questionIndex"
+              >
+                <div class="col-12">
+                  <div class="qcount-bg">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="d-list d-list2">
+                          <ul>
+                            <li style="width: 60%">
+                              <label>Question </label>
+                              <div class="language-toggle">
+                                <span
+                                  (click)="selectLng = 'en'"
+                                  [ngClass]="{ active: selectLng === 'en' }"
+                                  >Eng</span
+                                >
+                                <span
+                                  (click)="selectLng = 'ja'"
+                                  [ngClass]="{ active: selectLng === 'ja' }"
+                                  >Jap</span
+                                >
+                              </div>
+                              <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Enter question"
+                                formControlName="questionName"
+                                [hidden]="selectLng !== 'en'"
+                              />
+                              <input
+                                type="text"
+                                class="form-control"
+                                placeholder="質問を入力してください"
+                                formControlName="questionNameJA"
+                                [hidden]="selectLng !== 'ja'"
+                              />
+                            </li>
+                            <li style="width: 60%">
+                              <label>Answer Type</label>
+                              <select
+                                class="form-control"
+                                (change)="onChange($event, questionIndex)"
+                                formControlName="ansType"
+                                #rangevalue1
+                                *ngIf="!this.questionnairedId"
+                              >
+                                <option value="">Please Select Answer</option>
+                                <option value="option">Radio button</option>
+                                <option value="checkboxes">Checkboxes</option>
+                                <option value="dropdown">Dropdown</option>
+                              </select>
+
+                              <select
+                                class="form-control"
+                                (change)="onChange($event, questionIndex)"
+                                formControlName="ansType"
+                                #rangevalue
+                                [attr.disabled]="this.questionnairedId"
+                                *ngIf="this.questionnairedId"
+                              >
+                                <option value="">Please Select Answer</option>
+                                <option value="option">Radio button</option>
+                                <option value="checkboxes">Checkboxes</option>
+                                <option value="dropdown">Dropdown</option>
+                              </select>
+                            </li>
+                          </ul>
+                          <span></span>
+                          <br />
+                          <br />
+
+                          <div
+                            formArrayName="questionnaireSetObj"
+                            *ngIf="
+                              questionType != 'range' ||
+                              ((paragraphquestionType != 'short_answer' ||
+                                shortAnswerquestionType != 'paragraph') &&
+                                (OtherquestionType == 'option' ||
+                                  OtherquestionType == 'checkboxes' ||
+                                  OtherquestionType == 'dropdown'))
+                            "
+                          >
+                            <div class="d-list d-list2">
+                              <ul>
+                                <div
+                                  *ngIf="
+                                    answerAddObj(questionIndex).controls
+                                      .length > 0
+                                  "
+                                  class="language-toggle"
+                                >
+                                  <span
+                                    (click)="selectedLng = 'en'"
+                                    [ngClass]="{ active: selectedLng === 'en' }"
+                                    >Eng</span
+                                  >
+                                  <span
+                                    (click)="selectedLng = 'ja'"
+                                    [ngClass]="{ active: selectedLng === 'ja' }"
+                                    >Jap</span
+                                  >
+                                </div>
+                                <div
+                                  *ngFor="
+                                    let answer of answerAddObj(questionIndex)
+                                      .controls;
+                                    let answerIndex = index
+                                  "
+                                >
+                                  <div [formGroupName]="answerIndex">
+                                    <li style="display: inline">
+                                      <label
+                                        >Option
+                                        {{ answerIndex + 1 }}&nbsp;&nbsp;
+                                      </label>
+                                      <input
+                                        type="text"
+                                        formControlName="name"
+                                        placeholder="Enter option"
+                                        [hidden]="
+                                          !(selectedLng == 'en') &&
+                                          !(selectedLng == 'bo')
+                                        "
+                                      />
+                                      <input
+                                        type="text"
+                                        formControlName="nameJA"
+                                        placeholder="オプションを入力してください"
+                                        [hidden]="!(selectedLng == 'ja')"
+                                      />
+                                      <label>
+                                        &nbsp;&nbsp;Score:&nbsp;&nbsp;</label
+                                      >
+                                      <input
+                                        type="text"
+                                        formControlName="scoreVal"
+                                        (keypress)="numericOnly($event)"
+                                      />
+                                      &nbsp;&nbsp;
+                                      <button
+                                        (click)="
+                                          removeAnswerSheet(
+                                            questionIndex,
+                                            answerIndex
+                                          )
+                                        "
+                                      >
+                                        <i
+                                          class="fa-solid fa-circle-minus"
+                                        ></i></button
+                                      >&nbsp;
+                                      <button
+                                        type="button"
+                                        (click)="
+                                          addAnswerSheet(
+                                            questionIndex,
+                                            questionType
+                                          )
+                                        "
+                                        [disabled]="buttonDisable"
+                                      >
+                                        <i
+                                          class="fa-solid fa-circle-plus"
+                                        ></i></button
+                                      >&nbsp;
+                                    </li>
+                                  </div>
+                                </div>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-1">
+                  <a
+                    *ngIf="questionObjLength != 0"
+                    (click)="removeQuestion(questionIndex)"
+                    class="minus-icon-cd"
+                    ><i class="fa-solid fa-circle-minus"></i
+                  ></a>
+                  <a
+                    *ngIf="isLast && questionObjLength < Qcount - 1"
+                    (click)="addQuestion()"
+                    class="minus-icon-cd"
+                    ><i class="fa-solid fa-circle-plus"></i
+                  ></a>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-sm-6">
+                <div class="cd-btn">
+                  <button
+                    type="submit"
+                    (click)="submitForm()"
+                    class="btn-login btn btn-primary d-inline-block mt-3"
+                    [disabled]="!questionForm.valid"
+                    *ngIf="!this.questionnairedId"
+                  >
+                    Save
+                  </button>
+                  <button
+                    type="submit"
+                    (click)="updateForm()"
+                    class="btn-login btn btn-primary d-inline-block mt-3"
+                    [disabled]="!questionForm.valid"
+                    *ngIf="this.questionnairedId"
+                  >
+                    Update
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

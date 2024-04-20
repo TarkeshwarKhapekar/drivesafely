@@ -1,0 +1,236 @@
+<section class="content wh700">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 col-sm-6">
+        <h2>
+          <b>{{ "privacy-policy.Privacy-Policy" | translate }}</b
+          >&nbsp;
+        </h2>
+      </div>
+
+      <div class="col-12 col-sm-6 header-btn-block text-right mt-2 mt-sm-0">
+        <button
+          *ngIf="!isUpdate"
+          (click)="changeValue(true)"
+          class="btn btn-primary graident btn-small btn-pad-top-bot-4 mr-2"
+        >
+          <i
+            class="fa fa-pencil fa-sm"
+            aria-hidden="true"
+            *ngIf="!isUpdate"
+          ></i>
+          {{ "privacy-policy.Update" | translate }}
+        </button>
+        <button
+          *ngIf="isUpdate"
+          (click)="changeValue(false)"
+          class="btn btn-primary graident btn-small btn-pad-top-bot-4 mr-2"
+        >
+          <i class="fa fa-eye fa-sm" aria-hidden="true" *ngIf="isUpdate"></i>
+          {{ "privacy-policy.View" | translate }}
+        </button>
+
+        <input
+          class="btn btn-primary graident btn-small btn-pad-top-bot-4"
+          type="button"
+          value="{{ 'privacy-policy.Back' | translate }}"
+          (click)="goBack()"
+          style="float: right"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="profile wh700"
+    name="view"
+    *ngIf="!isUpdate"
+    style="min-height: 550px"
+  >
+    <div class="container-fluid">
+      <div class="card mt-4 border-0 shadow">
+        <form>
+          <div class="card-body">
+            <div class="mt-sm-4">
+              <div class="switch-main-block">
+                <div class="switch-action d-flex mb-2">
+                  <label class="label">{{
+                    "privacy-policy.Title" | translate
+                  }}</label>
+                  <div class="language-toggle">
+                    <span
+                      (click)="selectLng = 'ja'"
+                      [ngClass]="{ active: selectLng === 'ja' }"
+                      >Jap</span
+                    >
+                    <span
+                      (click)="selectLng = 'en'"
+                      [ngClass]="{ active: selectLng === 'en' }"
+                      >Eng</span
+                    >
+                  </div>
+                </div>
+                <p class="mb-0">
+                  {{
+                    selectLng === "en"
+                      ? policyDetails?.title.en
+                      : policyDetails?.title.ja
+                  }}
+                </p>
+              </div>
+            </div>
+            <div class="mt-4 mb-sm-2">
+              <div class="switch-main-block">
+                <div class="switch-action d-flex mb-2">
+                  <label class="label">{{
+                    "privacy-policy.Description" | translate
+                  }}</label>
+                  <div class="language-toggle">
+                    <span
+                      (click)="selectedLng = 'ja'"
+                      [ngClass]="{ active: selectedLng === 'ja' }"
+                      >Jap</span
+                    >
+                    <span
+                      (click)="selectedLng = 'en'"
+                      [ngClass]="{ active: selectedLng === 'en' }"
+                      >Eng</span
+                    >
+                  </div>
+                </div>
+                <p class="mb-0">
+                  {{
+                    selectedLng === "en"
+                      ? policyDetails?.description.en
+                      : policyDetails?.description.ja
+                  }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid" name="update" *ngIf="isUpdate">
+    <div class="card mt-4 border-0 shadow">
+      <form [formGroup]="editPolicyForm" (ngSubmit)="onSubmit()">
+        <div class="card-body">
+          <div class="mt-sm-4">
+            <div class="switch-main-block">
+              <div class="switch-action d-flex mb-2">
+                <label class="label">{{
+                  "privacy-policy.Title" | translate
+                }}</label>
+                <div class="language-toggle">
+                  <span
+                    (click)="selectLng = 'ja'"
+                    [ngClass]="{ active: selectLng === 'ja' }"
+                    >Jap</span
+                  >
+                  <span
+                    (click)="selectLng = 'en'"
+                    [ngClass]="{ active: selectLng === 'en' }"
+                    >Eng</span
+                  >
+                </div>
+              </div>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="{{ 'privacy-policy.EnterTitle' | translate }}"
+                formControlName="title"
+                [ngClass]="{ 'form-submitted': submitted }"
+                [hidden]="selectLng !== 'en'"
+              />
+              <span
+                *ngIf="
+                  submitted ||
+                  (f.title.errors && (f.title.dirty || f.title.touched))
+                "
+              >
+                <label
+                  class="text-danger"
+                  *ngIf="editPolicyForm.get('title').hasError('required')"
+                >
+                  {{ "content.Titleisrequired!" | translate }}
+                </label>
+              </span>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="質問を入力してください"
+                formControlName="titleJa"
+                [hidden]="selectLng !== 'ja'"
+              />
+            </div>
+          </div>
+          <div class="mt-4">
+            <div class="switch-main-block">
+              <div class="switch-action d-flex mb-2">
+                <label class="label">{{
+                  "privacy-policy.Description" | translate
+                }}</label>
+                <div class="language-toggle">
+                  <span
+                    (click)="selectedLng = 'ja'"
+                    [ngClass]="{ active: selectedLng === 'ja' }"
+                    >Jap</span
+                  >
+                  <span
+                    (click)="selectedLng = 'en'"
+                    [ngClass]="{ active: selectedLng === 'en' }"
+                    >Eng</span
+                  >
+                </div>
+              </div>
+              <textarea
+                type="text"
+                rows="7"
+                class="form-control"
+                placeholder="{{
+                  'privacy-policy.EnterDescription' | translate
+                }}"
+                [ngClass]="{ 'form-submitted': submitted }"
+                formControlName="description"
+                [hidden]="selectedLng !== 'en'"
+              ></textarea>
+              <span
+                *ngIf="
+                  submitted ||
+                  (f.description.errors &&
+                    (f.description.dirty || f.description.touched))
+                "
+              >
+                <label
+                  class="text-danger"
+                  *ngIf="editPolicyForm.get('description').hasError('required')"
+                >
+                  {{ "content.Descriptionisrequired!" | translate }}
+                </label>
+              </span>
+              <textarea
+                type="text"
+                rows="7"
+                class="form-control"
+                placeholder="質問を入力してください"
+                formControlName="descriptionJa"
+                [hidden]="selectedLng !== 'ja'"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer border-0 bg-transparent mb-2">
+          <button
+            class="btn btn-primary graident btn-small custom-button"
+            [disabled]="isSubmitDisabled()"
+            type="submit"
+          >
+            {{ "privacy-policy.Update" | translate }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

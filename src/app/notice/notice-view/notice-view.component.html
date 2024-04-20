@@ -1,0 +1,128 @@
+<div class="wh700">
+  <div class="page-title">
+    <div class="title_left">
+      <h2>
+        <b>{{ "notice.Notificationdetail" | translate }}</b>
+      </h2>
+    </div>
+    <div class="title_right">
+      <input
+        class="btn btn-primary graident btn-small btn-pad-top-bot-4"
+        type="button"
+        value="{{ 'notice.Back' | translate }}"
+        (click)="goBack()"
+        style="float: right"
+      />
+    </div>
+  </div>
+  <div class="clearfix"></div>
+
+  <div class="pathway-template">
+    <div class="row">
+      <div class="col-12">
+        <form>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12 col-md-6 col-lg-12">
+                <div class="form-group mb-3">
+                  <label class="label"
+                    ><b>{{ "notice.Type" | translate }}</b></label
+                  >
+                  <p>{{ getType(noticeDetails?.type) }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-md-6 col-lg-12">
+                <div class="form-group mb-3">
+                  <label class="label"
+                    ><b>{{ "notice.Title" | translate }}</b></label
+                  >
+                  <div class="language-toggle">
+                    <span
+                      (click)="selectLng = 'ja'"
+                      [ngClass]="{ active: selectLng === 'ja' }"
+                      >Jap</span
+                    >
+                    <span
+                      (click)="selectLng = 'en'"
+                      [ngClass]="{ active: selectLng === 'en' }"
+                      >Eng</span
+                    >
+                  </div>
+                  <p>
+                    {{
+                      selectLng === "en"
+                        ? noticeDetails?.title.en
+                        : noticeDetails?.title.ja
+                    }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12 col-md-6 col-lg-12">
+                <div class="form-group mb-3">
+                  <label class="label"
+                    ><b>{{ "notice.Description" | translate }}</b></label
+                  >
+                  <div class="language-toggle">
+                    <span
+                      (click)="selectedLng = 'ja'"
+                      [ngClass]="{ active: selectedLng === 'ja' }"
+                      >Jap</span
+                    >
+                    <span
+                      (click)="selectedLng = 'en'"
+                      [ngClass]="{ active: selectedLng === 'en' }"
+                      >Eng</span
+                    >
+                  </div>
+                  <p>
+                    {{
+                      selectedLng === "en"
+                        ? noticeDetails?.message.en
+                        : noticeDetails?.message.ja
+                    }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12 col-md-6 col-lg-12">
+                <div class="form-group mb-3">
+                  <label class="label"
+                    ><b>{{ "notice.UploadedImages" | translate }}</b></label
+                  >
+                  <div class="row">
+                    <div
+                      class="col-md-6 image_area"
+                      *ngFor="
+                        let previewImage of noticePreviewImages;
+                        let i = index
+                      "
+                    >
+                      <a href="{{ previewImage }}" target="_blank">
+                        <img
+                          class="preview-img"
+                          [src]="previewImage"
+                          alt=""
+                          height="60px"
+                          width="80px"
+                        />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+button,
+.buttons,
+.btn,
+.modal-footer .btn + .btn {
+  margin-bottom: 1px;
+
+  margin-right: 0px;
+}
+
+:host ::ng-deep .ngx-pagination {
+  margin-left: -47px !important;
+}

@@ -1,0 +1,27 @@
+.care-path-right-icon a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(27, 86, 219);
+  width: 30px;
+  height: 30px;
+  color: white;
+
+  border-radius: 50%;
+}
+
+.care-path-right-icon a:hover {
+  background-color: rgb(37, 96, 235);
+}
+
+@media screen and (max-width: 991px) {
+  .care-path-right-icon {
+    text-align: left;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .pathway-template {
+    padding: 30px 5px;
+  }
+}

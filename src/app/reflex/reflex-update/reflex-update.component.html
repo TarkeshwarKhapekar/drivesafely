@@ -1,0 +1,144 @@
+<section class="content wh700">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-10">
+        <h2>Reflex Screen</h2>
+      </div>
+      <div class="title_right">
+        <input
+          class="btn btn-primary graident btn-small custom-button  btn-pad-top-bot-4"
+          type="button"
+          value="Back"
+          (click)="goBack()"
+          style="margin-left: 124%"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card border-0 shadow">
+          <form (formGroup)="(addReflexForm)" (ngSubmit)="onSubmit()">
+            <div class="card-body">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-12">
+                    <h4 class="fs-20 fw-bold"></h4>
+                  </div>
+                </div>
+              </div>
+              <div class="container-fluid">
+                <div class="row mt-4">
+                  <div class="col-md-5 mr-4">
+                    <div class="form-group">
+                      <div class="upload-img" (click)="openImageSelector()">
+                        <i
+                          class="fa fa-camera action_btn"
+                          aria-hidden="true"
+                        ></i>
+                        <span class="action_btn"> Upload Reflex Screen1</span>
+                        <input
+                          type="file"
+                          style="display: none"
+                          class="btn chngPic file-upload"
+                          accept="image/*"
+                          name="reflexscreen1"
+                          id="reflexscreen1"
+                          (change)="onFileChanged($event)"
+                          formControlName="reflexscreen1"
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 image_area" >
+                        <img 
+                          class="preview-img"
+                          [src]="reflexPreviewImages1[0]"
+                          alt=""
+                          height="60px"
+                          width="80px"
+                          id="reflexPreviewImages1"
+                        />
+                        <em
+                          class="fa fa-times-circle remove_icon"
+                          style="
+                            font-size: 15px;
+                            color: rgb(255, 17, 0);
+                            margin-top: 0px;
+                            position: absolute;
+                            margin-left: -15px;
+                            font-weight: bold;
+                          "
+                          (click)="removeImages1(reflexPreviewImages1[0])"
+                          height="10px"
+                          id="re1"
+                        ></em>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-5">
+                    <div class="form-group">
+                      <div class="upload-img" (click)="openImageSelector()">
+                        <i
+                          class="fa fa-camera action_btn"
+                          aria-hidden="true"
+                        ></i>
+                        <span class="action_btn"> Upload Reflex Screen2</span>
+                        <input
+                          type="file"
+                          style="display: none"
+                          class="btn chngPic file-upload"
+                          accept="image/*"
+                          name="reflexscreen2"
+                          id="reflexscreen2"
+                          (change)="onFileChange2($event)"
+                          formControlName="reflexscreen2"
+                        />
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6 image_area">
+                          <img
+                            class="preview-img"
+                            [src]="reflexPreviewImages2[0]"
+                            alt=""
+                            height="60px"
+                            width="80px"
+                            id="reflexPreviewImages2"
+                          />
+                          <em
+                            class="fa fa-times-circle remove_icon"
+                            style="
+                              font-size: 15px;
+                              color: rgb(255, 17, 0);
+                              margin-top: 0px;
+                              position: absolute;
+                              margin-left: -15px;
+                              font-weight: bold;
+                            "
+                            (click)="removeImages2(reflexPreviewImages2[0])"
+                            height="10px"
+                            id="re2"
+                          ></em>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer border-0 bg-transparent">
+              <button
+                class="btn btn-primary graident btn-small custom-button"
+                type="button" (click)="onSubmit()" 
+              >
+                Save
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,116 @@
+<div class="container-fluid p-0">
+  <div class="row">
+    <div
+      class="col-lg-6 col-12 fxt-bg-img"
+      data-bg-image="assets/DS/img/loginImg.png"
+      style="background-image: url('assets/DS/img/loginImg.png')"
+    ></div>
+    <div class="col-lg-6 col-12 fxt-bg-color">
+      <div class="fxt-content">
+        <div class="pg-logo">
+          <img
+            src="assets/DS/img/logo-horizontal.png"
+            alt="logo"
+            style="height: 50px; width: 233px"
+          />
+        </div>
+        <div class="fxt-form mt-5">
+          <h2>{{ "login.title" | translate }}</h2>
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmiteLogin()">
+            <div class="form-group">
+              <label>{{ "login.Email" | translate }} : </label>
+              <div class="fxt-transformY-50 fxt-transition-delay-3">
+                <div class="input-container">
+                  <i class="fa-solid fa-user icon"></i>
+                  <input
+                    class="input-field"
+                    type="text"
+                    formControlName="email"
+                    [ngClass]="{ 'form-submitted': submitted }"
+                    placeholder="{{ 'login.Enteryouremail' | translate }}"
+                  />
+                </div>
+                <span
+                  *ngIf="
+                    submitted ||
+                    (loginform.email.errors &&
+                      (loginform.email.dirty || loginform.email.touched))
+                  "
+                >
+                  <label
+                    class="text-danger"
+                    *ngIf="loginForm.get('email').hasError('required')"
+                  >
+                    {{ "login.Emailisrequired!" | translate }}
+                  </label>
+                  <label
+                    class="text-danger"
+                    *ngIf="loginForm.get('email').hasError('minlength')"
+                  >
+                    {{ "login.Entervalidemail" | translate }}
+                  </label>
+                </span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>{{ "login.Password" | translate }} : </label>
+              <div class="input-container">
+                <i class="fa-solid fa-lock icon"></i>
+                <input
+                  [type]="fieldTextType ? 'text' : 'password'"
+                  class="input-field"
+                  type="password"
+                  formControlName="password"
+                  [ngClass]="{ 'form-submitted': submitted }"
+                  placeholder="{{ 'login.Enteryourpassword' | translate }}"
+                />
+                <i
+                  [ngClass]="{
+                    'fa-eye-slash': !fieldTextType,
+                    'fa-eye': fieldTextType
+                  }"
+                  (click)="toggleFieldTextType()"
+                  class="fas fa-eye-slash"
+                  id="eye"
+                ></i>
+              </div>
+              <span
+                *ngIf="
+                  submitted ||
+                  (loginform.password.errors &&
+                    (loginform.password.dirty || loginform.password.touched))
+                "
+              >
+                <label
+                  class="text-danger"
+                  *ngIf="loginForm.get('password').hasError('required')"
+                >
+                  {{ "login.Passwordisrequired!" | translate }}
+                </label>
+                <label
+                  class="text-danger"
+                  *ngIf="loginForm.get('password').hasError('minlength')"
+                >
+                  {{ "login.Passwordmustbeatleast5characters!" | translate }}
+                </label>
+              </span>
+              <a class="forgot" [routerLink]="['/login/forgot-password']"
+                ><br />
+                {{ "login.ForgotPassword?" | translate }}</a
+              >
+            </div>
+            <div class="form-group">
+              <div class="log-in-btn-wrap">
+                <input
+                  type="submit"
+                  class="btn-login btn btn-primary btn-block"
+                  value="{{ 'login.Submit' | translate }}"
+                />
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

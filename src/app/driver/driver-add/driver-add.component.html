@@ -1,0 +1,581 @@
+<div class="wh700">
+  <div class="page-title">
+    <div class="title_left">
+      <h2>
+        <b *ngIf="!userId">
+          {{ "driver.AddDriver" | translate }}
+        </b>
+
+        <b *ngIf="userId"> {{ "driver.EditDriver" | translate }} </b>
+      </h2>
+    </div>
+    <div class="title_right">
+      <input
+        class="btn btn-primary graident btn-small btn-pad-top-bot-4"
+        type="button"
+        value="{{ 'driver.Back' | translate }}"
+        (click)="goBack()"
+        style="float: right"
+      />
+    </div>
+  </div>
+  <div class="clearfix"></div>
+
+  <div class="pathway-template">
+    <div class="row">
+      <div class="col-12">
+        <form [formGroup]="addDriverForm" (ngSubmit)="onSubmit()">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12">
+                <h4 class="fs-20 fw-bold"></h4>
+              </div>
+            </div>
+
+            <div class="row mt-4">
+              <div class="col-12 col-md-6 col-lg-4">
+                <div class="form-group mb-3">
+                  <label>{{ "driver.DriverName" | translate }}</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="{{ 'driver.EnterName' | translate }}"
+                    maxlength="20"
+                    formControlName="name"
+                    [ngClass]="{ 'form-submitted': submitted }"
+                  />
+                </div>
+                <span
+                  *ngIf="
+                    submitted ||
+                    (f.name.errors && (f.name.dirty || f.name.touched))
+                  "
+                >
+                  <label
+                    class="text-danger"
+                    *ngIf="addDriverForm.get('name').hasError('maxlength')"
+                  >
+                    {{
+                      "driver.DriverNamemustbeatmost20characterslong."
+                        | translate
+                    }}
+                  </label>
+                  <label
+                    class="text-danger"
+                    *ngIf="addDriverForm.get('name').hasError('required')"
+                  >
+                    {{ "driver.Drivernameisrequired!" | translate }}
+                  </label>
+                  <label
+                    class="text-danger"
+                    *ngIf="addDriverForm.get('name').hasError('pattern')"
+                  >
+                    {{ "driver.Enteravalidname!" | translate }}
+                  </label>
+                </span>
+              </div>
+              <div class="col-12 col-md-6 col-lg-4">
+                <div class="form-group mb-3">
+                  <label>{{ "driver.EmailId" | translate }}</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    placeholder="{{ 'driver.EnterEmail' | translate }}"
+                    formControlName="email"
+                    pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+                    [ngClass]="{ 'form-submitted': submitted }"
+                  />
+                </div>
+                <span
+                  *ngIf="
+                    submitted ||
+                    (f.email.errors && (f.email.dirty || f.email.touched))
+                  "
+                >
+                  <label
+                    class="text-danger"
+                    *ngIf="addDriverForm.get('email').hasError('required')"
+                  >
+                    {{ "driver.EmailisRequired!" | translate }}
+                  </label>
+                  <label
+                    class="text-danger"
+                    *ngIf="addDriverForm.get('email').hasError('pattern')"
+                  >
+                    {{ "driver.Enteravalidemailaddress!" | translate }}
+                  </label>
+                </span>
+              </div>
+
+              <div class="col-12 col-md-6 col-lg-4">
+                <div class="form-group mb-3">
+                  <label>{{ "driver.PhoneNumber" | translate }}</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="{{ 'driver.EnterPhoneNumber' | translate }}"
+                    pattern="[0-9]*"
+                    minlength="11"
+                    maxlength="11"
+                    formControlName="phone"
+                    [ngClass]="{ 'form-submitted': submitted }"
+                  />
+                </div>
+                <span
+                  *ngIf="
+                    submitted ||
+                    (f.phone.errors && (f.phone.dirty || f.phone.touched))
+                  "
+                >
+                  <label
+                    class="text-danger"
+                    *ngIf="addDriverForm.get('phone').hasError('minlength')"
+                  >
+                    {{ "driver.PhoneNumbershouldbe10digit" | translate }}
+                  </label>
+                  <!-- <label class="text-danger" *ngIf="addDriverForm.get('phone')">
+                    {{ "driver.PhoneNumberisrequired!" | translate }}
+                  </label> -->
+                  <label
+                    class="text-danger"
+                    *ngIf="addDriverForm.get('phone').hasError('pattern')"
+                  >
+                    {{ "driver.PhoneNumbershouldbeonlynumbers" | translate }}
+                  </label>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid">
+            <div class="row mt-4">
+              <div class="col-12 col-md-6 col-lg-4">
+                <div class="form-group mb-3">
+                  <label>{{ "driver.Gender" | translate }}</label>
+                  <select
+                    name="gender"
+                    class="form-control"
+                    formControlName="gender"
+                    (change)="onGenderChange($event)"
+                  >
+                    <option selected="selected" value="">
+                      {{ "driver.SelectGender" | translate }}
+                    </option>
+                    <option value="Male">
+                      {{ "driver.Male" | translate }}
+                    </option>
+                    <option value="Female">
+                      {{ "driver.Female" | translate }}
+                    </option>
+                    <option value="Other">
+                      {{ "driver.Other" | translate }}
+                    </option>
+                  </select>
+                </div>
+                <span
+                  *ngIf="
+                    submitted ||
+                    (f.gender.errors && (f.gender.dirty || f.gender.touched))
+                  "
+                >
+                  <label
+                    class="text-danger"
+                    *ngIf="addDriverForm.get('gender').hasError('required')"
+                  >
+                    {{ "driver.Genderisrequired!" | translate }}
+                  </label>
+                </span>
+              </div>
+              <div class="col-12 col-md-6 col-lg-4" [hidden]="userId">
+                <div class="form-group mb-3">
+                  <label>{{ "driver.CreatePassword" | translate }}</label>
+                  <input
+                    [type]="fieldTextType ? 'text' : 'password'"
+                    type="password"
+                    class="form-control"
+                    formControlName="password"
+                    placeholder="{{ 'driver.EnterPassword' | translate }}"
+                    #password
+                    [ngClass]="{ 'form-submitted': submitted }"
+                    id="password"
+                  />
+                  <i
+                    [ngClass]="{
+                      'fa-eye-slash': !fieldTextType,
+                      'fa-eye': fieldTextType
+                    }"
+                    (click)="toggleFieldTextType()"
+                    class="fas fa-eye-slash"
+                    id="eye"
+                  ></i>
+                </div>
+                <span
+                  *ngIf="
+                    !userId &&
+                    (submitted ||
+                      (f.password.errors &&
+                        (f.password.dirty || f.password.touched)))
+                  "
+                >
+                  <label
+                    class="text-danger"
+                    *ngIf="addDriverForm.get('password').hasError('required')"
+                  >
+                    {{ "driver.Passwordisrequired!" | translate }}
+                  </label>
+                  <label
+                    class="text-danger"
+                    *ngIf="addDriverForm.get('password').hasError('pattern')"
+                  >
+                    {{
+                      "driver.Mustcontainatleastonenumber,oneuppercaseandonelowercaseletter,onespecialcharacter,and atleast8characters."
+                        | translate
+                    }}
+                  </label>
+                </span>
+              </div>
+
+              <div class="col-12 col-md-6 col-lg-4" *ngIf="!userId">
+                <div class="form-group mb-3">
+                  <label>{{ "driver.Re-enterPassword" | translate }}</label>
+                  <input
+                    [type]="fieldTextType1 ? 'text' : 'password'"
+                    type="password"
+                    class="form-control"
+                    id="confirmPassword"
+                    formControlName="confirmPassword"
+                    placeholder="{{
+                      'driver.EnterConfirmPassword' | translate
+                    }}"
+                    #confirmPassword
+                    (blur)="checkMatch(password.value, confirmPassword.value)"
+                  />
+                  <i
+                    [ngClass]="{
+                      'fa-eye-slash': !fieldTextType1,
+                      'fa-eye': fieldTextType1
+                    }"
+                    (click)="toggleFieldTextType1()"
+                    class="fas fa-eye-slash"
+                    id="eye"
+                  ></i>
+                </div>
+                <div
+                  *ngIf="
+                    addDriverForm.get('confirmPassword').hasError('required') &&
+                    addDriverForm.get('confirmPassword').touched
+                  "
+                  class="text-danger"
+                >
+                  {{ "driver.Confirmpasswordisrequired" | translate }}
+                </div>
+                <div
+                  *ngIf="!this.passwordMatched && confirmPassword.value != ''"
+                  class="text-danger"
+                >
+                  {{ "driver.Passwordnotmatched" | translate }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid">
+            <div class="row mt-4">
+              <div class="col-12 col-md-6 col-lg-4">
+                <div class="form-group mb-3">
+                  <label>{{ "driver.CorporateCode" | translate }}</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="corporateCode"
+                    minlength="5"
+                    maxlength="5"
+                    formControlName="corporateCode"
+                    placeholder="{{ 'driver.EnterCorporateCode' | translate }}"
+                  />
+                </div>
+                <span
+                  *ngIf="
+                    submitted ||
+                    (f.corporateCode.errors &&
+                      (f.corporateCode.dirty || f.corporateCode.touched))
+                  "
+                >
+                  <!-- <label
+                    class="text-danger"
+                    *ngIf="addDriverForm.get('corporateCode')"
+                  >
+                    {{ "driver.CorporateCodeisrequired!" | translate }}
+                  </label> -->
+                  <label
+                    class="text-danger"
+                    *ngIf="
+                      addDriverForm.get('corporateCode').hasError('minlength')
+                    "
+                  >
+                    {{ "driver.Corporatecodeshouldbe5digits" | translate }}
+                  </label>
+                  <label
+                    class="text-danger"
+                    *ngIf="addDriverForm.get('corporateCode').value?.length > 5"
+                  >
+                    {{
+                      "driver.Corporatecodeshouldnotexceed5digits" | translate
+                    }}
+                  </label>
+                </span>
+              </div>
+
+              <div class="col-12 col-md-6 col-lg-4">
+                <div class="form-group mb-3">
+                  <label>{{ "driver.YearofBirth" | translate }}</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="yearOfBirth"
+                    formControlName="yearOfBirth"
+                    placeholder="{{ 'driver.EnterYearofBirth' | translate }}"
+                    [ngClass]="{ 'form-submitted': submitted }"
+                    minlength="4"
+                    maxlength="4"
+                    max="{{ currentYear }}"
+                  />
+                </div>
+                <span
+                  *ngIf="
+                    submitted ||
+                    (f.yearOfBirth.errors &&
+                      (f.yearOfBirth.dirty || f.yearOfBirth.touched))
+                  "
+                >
+                  <label
+                    class="text-danger"
+                    *ngIf="
+                      addDriverForm.get('yearOfBirth').hasError('minlength')
+                    "
+                  >
+                    {{ "driver.YearofBirthshouldbe4digits" | translate }}
+                  </label>
+                  <!-- <label
+                    class="text-danger"
+                    *ngIf="addDriverForm.get('yearOfBirth')"
+                  >
+                    {{ "driver.YearofBirthisrequired!" | translate }}
+                  </label> -->
+                  <label
+                    class="text-danger"
+                    *ngIf="addDriverForm.get('yearOfBirth').hasError('max')"
+                  >
+                    {{ "driver.YearofBirthcannotbeafutureyear" | translate }}
+                  </label>
+                  <label
+                    class="text-danger"
+                    *ngIf="addDriverForm.get('yearOfBirth').hasError('min')"
+                  >
+                    {{ "driver.YearofBirthshouldbeatleast1900" | translate }}
+                  </label>
+                  <label
+                    class="text-danger"
+                    *ngIf="
+                      addDriverForm.get('yearOfBirth').hasError('underage')
+                    "
+                  >
+                    {{
+                      "driver.Youmustbeatleast18yearsoldtofilloutthisform"
+                        | translate
+                    }}
+                  </label>
+                </span>
+              </div>
+
+              <div class="col-12 col-md-6 col-lg-4">
+                <div class="form-group mb-3">
+                  <label>{{ "driver.Height(incm)" | translate }}</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="height"
+                    formControlName="height"
+                    placeholder="{{ 'driver.EnterYourHeight' | translate }}"
+                    min="54"
+                    max="300"
+                    [ngClass]="{ 'form-submitted': submitted }"
+                  />
+                </div>
+                <span
+                  *ngIf="
+                    submitted ||
+                    (f.height.errors && (f.height.dirty || f.height.touched))
+                  "
+                >
+                  <label
+                    class="text-danger"
+                    *ngIf="
+                      addDriverForm.get('height').hasError('min') ||
+                      addDriverForm.get('height').hasError('max')
+                    "
+                  >
+                    {{ "driver.height" | translate }}
+                  </label>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid">
+            <div class="row mt-4">
+              <div class="col-12 col-md-6 col-lg-4">
+                <div class="form-group mb-3">
+                  <label>{{ "driver.Weight(inkg)" | translate }}</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="weight"
+                    formControlName="weight"
+                    placeholder="{{ 'driver.EnterYourWeight' | translate }}"
+                    max="360"
+                    min="40"
+                    [ngClass]="{ 'form-submitted': submitted }"
+                  />
+                </div>
+                <span
+                  *ngIf="
+                    submitted ||
+                    (f.weight.errors && (f.weight.dirty || f.weight.touched))
+                  "
+                >
+                  <label
+                    class="text-danger"
+                    *ngIf="
+                      addDriverForm.get('weight').hasError('min') ||
+                      addDriverForm.get('weight').hasError('max')
+                    "
+                  >
+                    {{
+                      "driver.Theweightshouldbeapositivenumberwithamaximumofthreedigits"
+                        | translate
+                    }}
+                  </label>
+                </span>
+              </div>
+              <div class="col-12 col-md-6 col-lg-4">
+                <div class="form-group mb-3">
+                  <label>{{ "driver.RestingHeartRate" | translate }}</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="restingHeartRate"
+                    formControlName="restingHeartRate"
+                    placeholder="{{ 'driver.EnterHeartRate' | translate }}"
+                    [ngClass]="{ 'form-submitted': submitted }"
+                    max="220"
+                    min="40"
+                  />
+                </div>
+                <span
+                  *ngIf="
+                    submitted ||
+                    (f.restingHeartRate.errors &&
+                      (f.restingHeartRate.dirty || f.restingHeartRate.touched))
+                  "
+                >
+                  <label
+                    class="text-danger"
+                    *ngIf="
+                      addDriverForm.get('restingHeartRate').hasError('min') ||
+                      addDriverForm.get('restingHeartRate').hasError('max')
+                    "
+                  >
+                    {{
+                      "driver.TheRestingHeartRateinbpmshouldbeainbpmandpositivenumberwithamaximumofthreedigits"
+                        | translate
+                    }}
+                  </label>
+                </span>
+              </div>
+              <div class="col-12 col-md-6 col-lg-4">
+                <div class="form-group mb-3">
+                  <label style="margin-right: 20px">{{
+                    "driver.RingUse" | translate
+                  }}</label>
+                  <select
+                    name="ring"
+                    class="form-control"
+                    #isRing
+                    (change)="onRingChange($event)"
+                    formControlName="ringUse"
+                  >
+                    <option selected="selected" value="">
+                      {{ "driver.SelectRing" | translate }}
+                    </option>
+                    <option value="true">{{ "driver.Yes" | translate }}</option>
+                    <option value="false">{{ "driver.No" | translate }}</option>
+                  </select>
+                  <!-- <div
+                      *ngIf="
+                        addDriverForm.get('ringUse') &&
+                        addDriverForm.get('ringUse').touched
+                      "
+                      class="text-danger"
+                    >
+                      {{ "driver.ringusedornot" | translate }}
+                    </div> -->
+                </div>
+              </div>
+
+              <div
+                class="col-12 col-md-6 col-lg-4"
+                *ngIf="isRing.value === 'true'"
+              >
+                <div class="form-group mb-3">
+                  <label>{{ "driver.RingId" | translate }}</label>
+                  <input
+                    type="string"
+                    class="form-control"
+                    id="ringId"
+                    formControlName="ringId"
+                    placeholder="{{ 'driver.EnterRingId' | translate }}"
+                  />
+                </div>
+                <div
+                  *ngIf="
+                    addDriverForm.get('ringId').hasError('required') &&
+                    addDriverForm.get('ringId').touched
+                  "
+                  class="text-danger"
+                >
+                  {{ "driver.RingIdisrequired" | translate }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="card-footer footer-btn-block border-0 bg-transparent"
+            style="margin-left: -0.6%"
+          >
+            <button
+              class="btn btn-primary graident btn-small custom-button"
+              [disabled]="addDriverForm.invalid || !passwordMatched"
+              type="submit"
+              *ngIf="!userId"
+            >
+              {{ "driver.AddDriver" | translate }}
+            </button>
+            <button
+              class="btn btn-primary graident btn-small custom-button"
+              [disabled]="isSubmitDisabled()"
+              type="submit"
+              *ngIf="userId"
+            >
+              {{ "driver.UpdateDriver" | translate }}
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary btn-small custom-button mt-2 mt-sm-0 ml-sm-2"
+              (click)="onCancel()"
+            >
+              {{ "driver.Cancel" | translate }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

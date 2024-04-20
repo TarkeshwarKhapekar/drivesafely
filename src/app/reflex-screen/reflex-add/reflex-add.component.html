@@ -1,0 +1,170 @@
+<section class="content wh700">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-10">
+        <h2 *ngIf="reflexId">
+          <b>{{ "reflex.UpdateReflexscreen" | translate }}</b>
+        </h2>
+        <h2 *ngIf="!reflexId">
+          <b>{{ "reflex.AddReflexscreen" | translate }}</b>
+        </h2>
+      </div>
+      <div class="col-2 title_right">
+        <input
+          class="btn btn-primary graident btn-small btn-pad-top-bot-4"
+          type="button"
+          value="{{ 'reflex.Back' | translate }}"
+          (click)="goBack()"
+          style="float: right"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 mt-3">
+        <div class="card border-0 shadow">
+          <form [formGroup]="addReflexForm" (ngSubmit)="onSubmit()">
+            <div class="card-body">
+              <div class="container-fluid">
+                <div class="row mt-4">
+                  <div class="col-12 col-md-6 col-lg-6">
+                    <div class="form-group mb-3">
+                      <label for="">{{
+                        "reflex.ReflexScreen1" | translate
+                      }}</label>
+                      <div class="upload-img1" (click)="openImageSelector1()">
+                        <i
+                          class="fa fa-camera action_btn"
+                          aria-hidden="true"
+                        ></i>
+                        <span
+                          class="action_btn"
+                          style="cursor: pointer"
+                          *ngIf="!reflexId"
+                        >
+                          {{ "reflex.UploadImages" | translate }}</span
+                        >
+                        <span
+                          class="action_btn"
+                          style="cursor: pointer"
+                          *ngIf="reflexId"
+                        >
+                          {{ "reflex.UploadImage" | translate }}</span
+                        >
+                        <input
+                          type="file"
+                          style="display: none"
+                          class="btn chngPic file-upload1"
+                          accept="image/*"
+                          name="file1"
+                          id="file1"
+                          (change)="onChange($event)"
+                          formControlName="reflexscreen1"
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div
+                        class="col-md-6 image_area"
+                        *ngIf="myImage"
+                        let
+                        i="index"
+                      >
+                        <img
+                          class="preview-img"
+                          [src]="myImage"
+                          height="60px"
+                          width="80px"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6 col-lg-6">
+                    <div class="form-group mb-3">
+                      <label for="">{{
+                        "reflex.ReflexScreen2" | translate
+                      }}</label>
+                      <div class="upload-img2" (click)="openImageSelector2()">
+                        <i
+                          class="fa fa-camera action_btn"
+                          aria-hidden="true"
+                        ></i>
+                        <span
+                          class="action_btn"
+                          style="cursor: pointer"
+                          *ngIf="!reflexId"
+                        >
+                          {{ "reflex.UploadImages" | translate }}</span
+                        >
+                        <span
+                          class="action_btn"
+                          style="cursor: pointer"
+                          *ngIf="reflexId"
+                        >
+                          {{ "reflex.UploadImage" | translate }}</span
+                        >
+                        <input
+                          type="file"
+                          style="display: none"
+                          class="btn chngPic file-upload2"
+                          accept="image/*"
+                          name="file2"
+                          id="file2"
+                          (change)="onChange1($event)"
+                          formControlName="reflexscreen2"
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div
+                        class="col-md-6 image_area"
+                        *ngIf="myImage1"
+                        let
+                        i="index"
+                      >
+                        <img
+                          class="preview-img"
+                          [src]="myImage1"
+                          height="60px"
+                          width="80px"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="pl-4 mt-3">
+              <p style="color: black; padding-left: 12px" *ngIf="!reflexId">
+                <b>{{ selectedLang === "en" ? "Note:" : "注記:" }}</b>
+                {{ "note.Note" | translate }}
+              </p>
+            </div>
+            <div
+              class="card-footer border-0 bg-transparent"
+              style="margin-left: 1.3%"
+            >
+              <button
+                class="btn btn-primary graident btn-small custom-button"
+                [disabled]="addReflexForm.invalid"
+                type="submit"
+                *ngIf="!reflexId"
+              >
+                {{ "reflex.AddReflexscreen" | translate }}
+              </button>
+              <button
+                class="btn btn-primary graident btn-small custom-button"
+                type="submit"
+                *ngIf="reflexId"
+              >
+                {{ "reflex.UpdateReflexscreen" | translate }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

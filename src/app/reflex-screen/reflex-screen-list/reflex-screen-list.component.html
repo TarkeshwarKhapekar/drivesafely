@@ -1,0 +1,101 @@
+<section class="wh700">
+  <div class="page-title">
+    <div class="title_left">
+      <h3>
+        <b>{{ "reflex.ReflexScreen" | translate }}</b>
+      </h3>
+    </div>
+    <div class="title_right">
+      <input
+        class="btn btn-primary graident btn-small btn-pad-top-bot-4"
+        type="button"
+        value="{{ 'reflex.Back' | translate }}"
+        (click)="goBack()"
+        style="float: right"
+      />
+
+      <button
+        class="btn btn-primary graident btn-small btn-pad-top-bot-4"
+        type="button"
+        [routerLink]="['/DS/reflex-screen/reflex-screen-add']"
+        style="float: right; margin-right: 10px"
+      >
+        &nbsp; {{ "reflex.AddReflexscreen" | translate }}
+      </button>
+    </div>
+  </div>
+
+  <div class="clearfix"></div>
+
+  <div class="pathway-template">
+    <div class="row">
+      <div class="col-12">
+        <form>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-5 col-md-4">
+                <div class="form-group mb-3">
+                  <label
+                    ><b>{{ "reflex.ReflexScreen1" | translate }}</b></label
+                  >
+                </div>
+              </div>
+              <div class="col-5 col-md-4">
+                <div class="form-group mb-3">
+                  <label
+                    ><b>{{ "reflex.ReflexScreen2" | translate }}</b></label
+                  >
+                </div>
+              </div>
+              <div class="col-2 col-md-4">
+                <div class="form-group mb-3">
+                  <label
+                    ><b>{{ "reflex.Action" | translate }}</b></label
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid" *ngFor="let element of reflexDetails">
+            <div class="row">
+              <div class="col-5 col-md-4">
+                <div class="form-group mb-3">
+                  <img
+                    class="preview-img"
+                    [src]="element.reflexscreen1"
+                    alt=""
+                    height="60px"
+                    width="80px"
+                  />
+                </div>
+              </div>
+              <div class="col-5 col-md-4">
+                <div class="form-group mb-3">
+                  <img
+                    class="preview-img"
+                    [src]="element.reflexscreen2"
+                    alt=""
+                    height="60px"
+                    width="80px"
+                  />
+                </div>
+              </div>
+              <div class="col-2 col-md-4">
+                <div class="care-path-right-icon mb-3">
+                  <a
+                    [routerLink]="[
+                      '/DS/reflex-screen/reflex-screen-edit',
+                      element._id
+                    ]"
+                    title="Edit"
+                    ><i class="fa-solid fa-pencil"></i
+                  ></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

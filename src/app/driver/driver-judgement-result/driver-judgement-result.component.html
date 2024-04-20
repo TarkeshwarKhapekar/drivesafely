@@ -1,0 +1,240 @@
+<div class="wh700">
+  <div class="page-title">
+    <div class="title_left">
+      <h3 *ngIf="selectedLang == 'en'">
+        Judgement Result History for
+        {{ name }}
+      </h3>
+      <h3 *ngIf="selectedLang == 'ja'">{{ name }} の最終判定結果履歴</h3>
+    </div>
+    <div class="title_right">
+      <input
+        class="btn btn-primary graident btn-small btn-pad-top-bot-4"
+        type="button"
+        value="{{ 'driver.Back' | translate }}"
+        (click)="goBack1()"
+        style="float: right"
+      />
+    </div>
+  </div>
+
+  <div class="clearfix"></div>
+
+  <div class="pathway-template">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-12 col-lg-3 mb-2 mb-lg-0">
+          <select
+            class="form-control"
+            id="levelDropdown"
+            [(ngModel)]="selectedLevel"
+            (change)="onSelectLevel(selectedLevel); getAllDiagnosticByUser()"
+          >
+            <option value="">{{ "driver.SelectLevel" | translate }}</option>
+            <option
+              *ngFor="let level of judgementLevel"
+              [value]="level.level[selectedLang]"
+            >
+              {{ level.level[selectedLang] }}
+            </option>
+          </select>
+        </div>
+        <div class="col-12 col-lg-3 mb-2 mb-lg-0">
+          <div class="input-group add-on mb-0">
+            <input
+              class="form-control"
+              placeholder="Select Date"
+              name="date-filter"
+              id="date-filter"
+              type="date"
+              [(ngModel)]="createdAt"
+              (ngModelChange)="getAllDiagnosticByUser()"
+            />
+          </div>
+        </div>
+        <div class="col-12 col-lg-1">
+          <input
+            class="btn btn-primary graident btn-small btn-pad-top-bot-4"
+            type="button"
+            value="Clear"
+            (click)="clearDate()"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Table-->
+
+  <div class="pathway-template">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-lg-12">
+          <div class="table-responsive">
+            <table
+              datatable
+              class="table table-bordered dt-responsive"
+              style="width: 100%"
+            >
+              <thead>
+                <tr>
+                  <th
+                    class="text-center sortable"
+                    (click)="toggleSortDirection(); sort('level.en')"
+                  >
+                    <div class="sort-cell-wrapper d-flex">
+                      {{ "driver.JudgementResult" | translate }}
+                      <span
+                        class="sort-cell d-inline-flex flex-column justify-content-center"
+                      >
+                        <span *ngIf="!isAscending" class="up">
+                          <img
+                            class="img-fluid"
+                            src="../../../assets/img/arrow_drop_up.svg"
+                            alt="arrow-up"
+                          />
+                        </span>
+                        <span *ngIf="isAscending" class="down">
+                          <img
+                            class="img-fluid"
+                            src="../../../assets/img/arrow_drop_down.svg"
+                            alt="arrow-down"
+                          />
+                        </span>
+                      </span>
+                    </div>
+                  </th>
+                  <th
+                    class="text-center sortable"
+                    (click)="toggleSortDirection1(); sort('description.en')"
+                  >
+                    <div class="sort-cell-wrapper d-flex">
+                      {{ "driver.Description" | translate }}
+                      <span
+                        class="sort-cell d-inline-flex flex-column justify-content-center"
+                      >
+                        <span *ngIf="!isAscending1" class="up">
+                          <img
+                            class="img-fluid"
+                            src="../../../assets/img/arrow_drop_up.svg"
+                            alt="arrow-up"
+                          />
+                        </span>
+                        <span *ngIf="isAscending1" class="down">
+                          <img
+                            class="img-fluid"
+                            src="../../../assets/img/arrow_drop_down.svg"
+                            alt="arrow-down"
+                          />
+                        </span>
+                      </span>
+                    </div>
+                  </th>
+                  <th
+                    class="text-center sortable"
+                    (click)="toggleSortDirection2(); sort('createdAt')"
+                  >
+                    <div class="sort-cell-wrapper d-flex">
+                      {{ "driver.Date&Time" | translate }}
+                      <span
+                        class="sort-cell d-inline-flex flex-column justify-content-center"
+                      >
+                        <span *ngIf="!isAscending2" class="up">
+                          <img
+                            class="img-fluid"
+                            src="../../../assets/img/arrow_drop_up.svg"
+                            alt="arrow-up"
+                          />
+                        </span>
+                        <span *ngIf="isAscending2" class="down">
+                          <img
+                            class="img-fluid"
+                            src="../../../assets/img/arrow_drop_down.svg"
+                            alt="arrow-down"
+                          />
+                        </span>
+                      </span>
+                    </div>
+                  </th>
+                  <th class="text-center sortable">
+                    <div class="sort-cell-wrapper d-flex">
+                      {{ "driver.ViewDetails" | translate }}
+                      <span
+                        class="sort-cell d-inline-flex flex-column justify-content-center"
+                      >
+                      </span>
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                *ngFor="
+                  let element of judgementData
+                    | paginate
+                      : {
+                          itemsPerPage: count,
+                          currentPage: page,
+                          id: 'second',
+                          totalItems: totaldocs
+                        }
+                "
+              >
+                <tr>
+                  <td class="text-capitalize">
+                    {{ element.level[selectedLang] }}<br />
+                    {{ element.title[selectedLang] }}
+                  </td>
+                  <td>{{ element.description[selectedLang] }}</td>
+                  <td>
+                    {{ element.createdAt | date : "yyyy-MM-dd, HH:mm:ss" }}
+                  </td>
+                  <td>
+                    <a
+                      [routerLink]="[
+                        '/DS/driver/aptitude-result',
+                        element.declarationId
+                      ]"
+                      [queryParams]="{
+                        _id: element._id,
+                        createdAt: element.createdAt
+                      }"
+                      >{{ "driver.View" | translate }}</a
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="text-center" *ngIf="totaldocs == 0">
+              {{ "common.NoResultsFound" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="totaldocs > 10">
+        <div class="col-sm-6 text-left">
+          <pagination-controls
+            (pageChange)="pageChange($event)"
+            id="second"
+            previousLabel="{{ 'driver.Previous' | translate }}"
+            nextLabel="{{ 'driver.Next' | translate }}"
+          >
+          </pagination-controls>
+        </div>
+        <div class="col-sm-6 text-right" *ngIf="totaldocs > 10">
+          <label for="entries"
+            >{{ "driver.NumberofEntries" | translate }} :&nbsp;
+          </label>
+          <select
+            id="entries"
+            [(ngModel)]="count"
+            (ngModelChange)="getAllDiagnosticByUser(1)"
+          >
+            <option value="10" *ngIf="totaldocs >= 10">10</option>
+            <option value="20" *ngIf="totaldocs >= 20">20</option>
+            <option value="30" *ngIf="totaldocs >= 30">30</option>
+            <option value="40" *ngIf="totaldocs >= 40">40</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

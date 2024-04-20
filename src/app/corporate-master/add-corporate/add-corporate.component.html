@@ -1,0 +1,146 @@
+<section class="content wh700">
+  <div class="page-title">
+    <div class="title_left">
+      <h2>
+        <b *ngIf="corporateId">{{
+          "corporateMaster.EditCorporate" | translate
+        }}</b>
+        <b *ngIf="!corporateId">{{
+          "corporateMaster.AddCorporate" | translate
+        }}</b>
+      </h2>
+    </div>
+    <div class="title_right">
+      <input
+        class="btn btn-primary graident btn-small btn-pad-top-bot-4"
+        type="button"
+        value="{{ 'corporateMaster.Back' | translate }}"
+        (click)="goBack()"
+        style="float: right"
+      />
+    </div>
+  </div>
+  <div class="clearfix"></div>
+
+  <div class="pathway-template">
+    <div class="row">
+      <div class="col-12">
+        <form [formGroup]="addCorporateForm" (ngSubmit)="onSubmit()">
+          <div class="card-body">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-12 col-md-6 col-lg-12">
+                  <div class="form-group mb-3">
+                    <label class="label">{{
+                      "corporateMaster.CorporateName" | translate
+                    }}</label>
+                    <input
+                      type="text"
+                      class="form-control custom-input"
+                      placeholder="{{
+                        'corporateMaster.EnterCorporateName' | translate
+                      }}"
+                      maxlength="40"
+                      formControlName="name"
+                      [ngClass]="{ 'form-submitted': submitted }"
+                    />
+                  </div>
+                  <span
+                    *ngIf="
+                      submitted ||
+                      (f.name.errors && (f.name.dirty || f.name.touched))
+                    "
+                  >
+                    <label
+                      class="text-danger"
+                      *ngIf="addCorporateForm.get('name').hasError('maxlength')"
+                    >
+                      {{
+                        "corporateMaster.CorporateNamemustbeatmost40characterslong."
+                          | translate
+                      }}
+                    </label>
+                    <label
+                      class="text-danger"
+                      *ngIf="addCorporateForm.get('name').hasError('required')"
+                    >
+                      {{
+                        "corporateMaster.Corporatenameisrequired!" | translate
+                      }}
+                    </label>
+                  </span>
+                </div>
+                <div class="col-12 col-md-6 col-lg-12">
+                  <div class="form-group mb-3">
+                    <label class="label">{{
+                      "corporateMaster.CorporateCode" | translate
+                    }}</label>
+                    <input
+                      type="text"
+                      class="form-control custom-input"
+                      formControlName="code"
+                      [ngClass]="{ 'form-submitted': submitted }"
+                      placeholder="{{
+                        'corporateMaster.EnterCorporateCode' | translate
+                      }}"
+                    />
+                  </div>
+                  <span
+                    *ngIf="
+                      submitted ||
+                      (f.code.errors && (f.code.dirty || f.code.touched))
+                    "
+                  >
+                    <label
+                      class="text-danger"
+                      *ngIf="addCorporateForm.get('code').hasError('required')"
+                    >
+                      {{
+                        "corporateMaster.CorporateCodeisrequired!" | translate
+                      }}
+                    </label>
+                    <label
+                      class="text-danger"
+                      *ngIf="addCorporateForm.get('code').hasError('pattern')"
+                    >
+                      {{ "corporateUser.Businesscodeshouldbe" | translate }}
+                    </label>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="card-footer footer-btn-block border-0 bg-transparent"
+            style="margin-left: -0.2%"
+          >
+            <button
+              [disabled]="isSubmitDisabled()"
+              class="btn btn-primary graident btn-small custom-button"
+              type="submit"
+              *ngIf="corporateId"
+            >
+              {{ "corporateMaster.Update" | translate }}
+            </button>
+            <button
+              [disabled]="isSubmitDisabled()"
+              class="btn btn-primary graident btn-small custom-button"
+              type="submit"
+              *ngIf="!corporateId"
+            >
+              {{ "corporateMaster.AddCorporate" | translate }}
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary btn-small custom-button mt-2 mt-sm-0 ml-sm-2"
+              (click)="onCancel()"
+            >
+              {{ "corporateMaster.Cancel" | translate }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

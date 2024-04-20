@@ -1,0 +1,60 @@
+<div class="wh500">
+  <div class="page-title">
+    <div class="title_left">
+      <h3>
+        <b>{{ "dashboard.Dashboard" | translate }}</b>
+      </h3>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+  <div class="row state-overview mt-4">
+    <div class="col-lg-4 col-sm-6" [routerLink]="['/DS/driver']">
+      <section class="card">
+        <div class="symbol terques">
+          <i class="fa-solid fa-users"></i>
+        </div>
+        <div
+          class="value"
+          [routerLink]="['/DS/driver']"
+          style="cursor: pointer"
+        >
+          <h1 class="count">{{ dashboardData.Drivers }}</h1>
+          <p translate="dashboard.TotalDriverRegistered"></p>
+        </div>
+      </section>
+    </div>
+    <div class="col-lg-4 col-sm-6">
+      <section class="card">
+        <div class="symbol red">
+          <i class="fa-solid fa-list-alt"></i>
+        </div>
+        <div class="value">
+          <h1 class="count2">{{ dashboardData.Diagnostic }}</h1>
+          <p translate="dashboard.TotalDiagnosis"></p>
+        </div>
+      </section>
+    </div>
+    <div class="col-lg-4 col-sm-6">
+      <section class="card">
+        <div class="symbol yellow">
+          <i class="fa-solid fa-bell"></i>
+        </div>
+        <div
+          class="value"
+          [routerLink]="['/DS/notice']"
+          style="cursor: pointer"
+        >
+          <h1 class="count3">{{ dashboardData.Notifications }}</h1>
+          <p translate="dashboard.TotalNotifications"></p>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<footer style="background: none; font-weight: bolder">
+  <div class="footer-content">
+    {{ "dashboard.CurrentDateandTime" | translate }}:
+    {{ currentDate$ | async | date : "medium" }}
+  </div>
+</footer>

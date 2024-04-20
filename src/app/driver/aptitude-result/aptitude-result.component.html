@@ -1,0 +1,169 @@
+<div class="wh700">
+  <div class="page-title">
+    <div class="title_left">
+      <h2>
+        <b>{{ "driver.JudgementLog" | translate }}</b>
+      </h2>
+    </div>
+    <div class="title_right">
+      <input
+        class="btn btn-primary graident btn-small btn-pad-top-bot-4"
+        type="button"
+        value="{{ 'driver.Back' | translate }}"
+        (click)="goBack()"
+        style="float: right"
+      />
+    </div>
+  </div>
+
+  <div class="clearfix"></div>
+
+  <div class="pathway-template">
+    <div class="row">
+      <div class="col-12">
+        <form>
+          <h4>
+            <b
+              >{{ "driver.Dataacquistion" | translate }} -
+              {{
+                diagnosticData.observation.deviceType === "RING"
+                  ? "Smart Ring"
+                  : "Camera"
+              }}
+            </b>
+          </h4>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="row mt-2">
+                <div class="col-md-6">
+                  <label class="bold-text"
+                    >{{ "driver.OverallJudgement" | translate }} :</label
+                  >
+                  <div class="language-toggle">
+                    <span
+                      (click)="selectLng = 'ja'"
+                      [ngClass]="{ active: selectLng === 'ja' }"
+                      >Jap</span
+                    >
+                    <span
+                      (click)="selectLng = 'en'"
+                      [ngClass]="{ active: selectLng === 'en' }"
+                      >Eng</span
+                    >
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="text-capitalize"
+                    >{{
+                      selectLng === "en"
+                        ? diagnosticData?.finalJudgement[0]?.level?.en
+                        : diagnosticData?.finalJudgement[0]?.level?.ja
+                    }}
+                    -
+                    {{
+                      selectLng === "en"
+                        ? diagnosticData?.finalJudgement[0]?.title?.en
+                        : diagnosticData?.finalJudgement[0]?.title?.ja
+                    }}</label
+                  >
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-md-6">
+                  <label class="bold-text"
+                    >{{ "driver.Date&Time" | translate }} :</label
+                  >
+                </div>
+                <div class="col-md-6">
+                  <label>{{
+                    createdAtValue | date : "yyyy-MM-dd, HH:mm:ss"
+                  }}</label>
+                </div>
+              </div>
+
+              <div class="row mt-2">
+                <div class="col-md-6">
+                  <label class="bold-text"
+                    >{{ "driver.Pulse" | translate }} :</label
+                  >
+                </div>
+                <div class="col-md-6">
+                  <label
+                    >{{
+                      diagnosticData?.observation?.pulse | number : "1.0-0"
+                    }}
+                    BPM</label
+                  >
+                </div>
+              </div>
+
+              <div class="row mt-2">
+                <div class="col-md-6">
+                  <label class="bold-text"
+                    >{{ "driver.No.ofsteps" | translate }} :</label
+                  >
+                </div>
+                <div class="col-md-6">
+                  <label>{{ diagnosticData?.observation?.steps }}</label>
+                </div>
+              </div>
+
+              <div class="row mt-2">
+                <div class="col-md-6">
+                  <label class="bold-text"
+                    >{{ "driver.QOLScore" | translate }} :</label
+                  >
+                </div>
+                <div class="col-md-6">
+                  <label>{{
+                    diagnosticData?.observation?.stressScore | number : "1.0-0"
+                  }}</label>
+                </div>
+              </div>
+
+              <div class="row mt-2">
+                <div class="col-md-6">
+                  <label class="bold-text"
+                    >{{ "driver.Reflextest" | translate }} :</label
+                  >
+                </div>
+                <div class="col-md-6">
+                  <label class="text"
+                    >{{ diagnosticData?.reflexaction?.time }} s</label
+                  >
+                </div>
+              </div>
+
+              <div class="row mt-2">
+                <div class="col-md-6">
+                  <label class="bold-text"
+                    >{{ "driver.Description" | translate }} :</label
+                  >
+                  <div class="language-toggle">
+                    <span
+                      (click)="selectsLng = 'ja'"
+                      [ngClass]="{ active: selectsLng === 'ja' }"
+                      >Jap</span
+                    >
+                    <span
+                      (click)="selectsLng = 'en'"
+                      [ngClass]="{ active: selectsLng === 'en' }"
+                      >Eng</span
+                    >
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="text-capitalize">{{
+                    selectsLng === "en"
+                      ? diagnosticData?.finalJudgement[0]?.description?.en
+                      : diagnosticData?.finalJudgement[0]?.description?.ja
+                  }}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

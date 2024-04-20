@@ -1,0 +1,20 @@
+.card-body {
+  padding: 0.1rem;
+}
+
+.label {
+  padding-bottom: 11px;
+}
+
+button,
+.buttons,
+.btn,
+.modal-footer .btn+.btn {
+  margin-bottom: 1px;
+
+  margin-right: 0px;
+}
+
+.footer-btn-block {
+  display: block;
+}

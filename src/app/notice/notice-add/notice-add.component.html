@@ -1,0 +1,303 @@
+<div class="wh700">
+  <div class="page-title">
+    <div class="title_left">
+      <h2>
+        <b *ngIf="noticeId">{{ "notice.EditNotification" | translate }}</b>
+        <b *ngIf="!noticeId">{{ "notice.AddNotification" | translate }}</b>
+      </h2>
+    </div>
+    <div class="title_right">
+      <input
+        class="btn btn-primary graident btn-small btn-pad-top-bot-4"
+        type="button"
+        value="{{ 'notice.Back' | translate }}"
+        (click)="goBack()"
+        style="float: right"
+      />
+    </div>
+  </div>
+  <div class="clearfix"></div>
+
+  <div class="pathway-template">
+    <div class="row">
+      <div class="col-12">
+        <form [formGroup]="addNoticeForm" (ngSubmit)="onSubmit()">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12">
+                <h4 class="fs-20 fw-bold"></h4>
+              </div>
+            </div>
+
+            <div class="row mt-4">
+              <div class="col-12 col-md-6 col-lg-12">
+                <div class="form-group mb-3">
+                  <label class="label">{{ "notice.Type" | translate }}</label>
+                  <select
+                    name="type"
+                    class="form-control"
+                    formControlName="type"
+                    (change)="onTypeChange($event)"
+                  >
+                    <option selected="selected" value="">
+                      {{ "notice.SelectType" | translate }}
+                    </option>
+                    <option value="Notice from SDNC">
+                      {{ "notice.NoticefromSDNC" | translate }}
+                    </option>
+                    <option value="Transportation related information">
+                      {{
+                        "notice.transportationRelatedInformation" | translate
+                      }}
+                    </option>
+                    <option value="Notice regarding the application">
+                      {{
+                        "notice.noticeRegardingTheSDNCApplication" | translate
+                      }}
+                    </option>
+                  </select>
+                </div>
+                <span
+                  *ngIf="
+                    submitted ||
+                    (f.type.errors && (f.type.dirty || f.type.touched))
+                  "
+                >
+                  <label
+                    class="text-danger"
+                    *ngIf="addNoticeForm.get('type').hasError('required')"
+                  >
+                    {{ "notice.Typeisrequired!" | translate }}
+                  </label>
+                </span>
+              </div>
+            </div>
+
+            <div class="row mt-4">
+              <div class="col-12 col-md-6 col-lg-12">
+                <div class="form-group mb-3">
+                  <label>{{ "notice.Title" | translate }}</label>
+                  <div class="language-toggle">
+                    <span
+                      (click)="selectedLng = 'ja'"
+                      [ngClass]="{ active: selectedLng === 'ja' }"
+                      >Jap</span
+                    >
+                    <span
+                      (click)="selectedLng = 'en'"
+                      [ngClass]="{ active: selectedLng === 'en' }"
+                      >Eng</span
+                    >
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="{{ 'notice.EnterTitle' | translate }}"
+                    formControlName="title"
+                    [ngClass]="{ 'form-submitted': submitted }"
+                    [hidden]="selectedLng !== 'en'"
+                  />
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="{{ 'notice.EnterTitle' | translate }}"
+                    formControlName="titleJa"
+                    [hidden]="selectedLng !== 'ja'"
+                  />
+
+                  <span
+                    *ngIf="
+                      submitted ||
+                      (f.title.errors && (f.title.dirty || f.title.touched)) ||
+                      (f.titleJa.errors &&
+                        (f.titleJa.dirty || f.titleJa.touched))
+                    "
+                  >
+                    <label
+                      class="text-danger"
+                      *ngIf="
+                        selectedLng === 'en' &&
+                        addNoticeForm.get('title').hasError('required')
+                      "
+                    >
+                      {{ "notice.Titleisrequired!" | translate }}
+                    </label>
+                    <label
+                      class="text-danger"
+                      *ngIf="
+                        selectedLng === 'ja' &&
+                        addNoticeForm.get('titleJa').hasError('required')
+                      "
+                    >
+                      {{ "notice.Titleisrequired!" | translate }}
+                    </label>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="container-fluid">
+            <div class="row mt-4">
+              <div class="col-12 col-md-6 col-lg-12">
+                <div class="form-group mb-3">
+                  <label>{{ "notice.Description" | translate }}</label>
+                  <div class="language-toggle">
+                    <span
+                      (click)="selectLng = 'ja'"
+                      [ngClass]="{ active: selectLng === 'ja' }"
+                      >Jap</span
+                    >
+                    <span
+                      (click)="selectLng = 'en'"
+                      [ngClass]="{ active: selectLng === 'en' }"
+                      >Eng</span
+                    >
+                  </div>
+                  <textarea
+                    type="text"
+                    class="form-control"
+                    placeholder="{{ 'notice.EnterDescription' | translate }}"
+                    [ngClass]="{ 'form-submitted': submitted }"
+                    formControlName="message"
+                    [hidden]="selectLng !== 'en'"
+                  ></textarea>
+                  <textarea
+                    type="text"
+                    class="form-control"
+                    placeholder="{{ 'notice.EnterDescription' | translate }}"
+                    formControlName="messageJa"
+                    [hidden]="selectLng !== 'ja'"
+                  ></textarea>
+
+                  <span
+                    *ngIf="
+                      submitted ||
+                      (f.message.errors &&
+                        (f.message.dirty || f.message.touched)) ||
+                      (f.messageJa.errors &&
+                        (f.messageJa.dirty || f.messageJa.touched))
+                    "
+                  >
+                    <label
+                      class="text-danger"
+                      *ngIf="
+                        selectLng === 'en' &&
+                        addNoticeForm.get('message').hasError('required')
+                      "
+                    >
+                      {{ "notice.Descriptionisrequired!" | translate }}
+                    </label>
+
+                    <label
+                      class="text-danger"
+                      *ngIf="
+                        selectLng === 'ja' &&
+                        addNoticeForm.get('messageJa').hasError('required')
+                      "
+                    >
+                      {{ "notice.Descriptionisrequired!" | translate }}
+                    </label>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="container-fluid">
+            <div class="row mt-4">
+              <div class="col-12 col-md-6 col-lg-12">
+                <div class="form-group mb-3">
+                  <label for="">{{ "notice.Image" | translate }}</label>
+                  <div class="upload-img" (click)="openImageSelector()">
+                    <i class="fa fa-camera action_btn" aria-hidden="true"></i>
+                    <span class="action_btn" style="cursor: pointer">
+                      {{ "notice.UploadImages" | translate }}</span
+                    >
+                    <input
+                      type="file"
+                      style="display: none"
+                      class="btn chngPic file-upload"
+                      accept="image/*"
+                      name="file"
+                      id="file"
+                      (change)="onFileChanged($event)"
+                      formControlName="image"
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div
+                    class="col-md-6 image_area"
+                    *ngFor="
+                      let previewImage of noticePreviewImages;
+                      let i = index
+                    "
+                  >
+                    <img
+                      class="preview-img"
+                      [src]="previewImage"
+                      alt=""
+                      height="60px"
+                      width="80px"
+                    />
+                    <em
+                      class="fa fa-times-circle remove_icon"
+                      style="
+                        font-size: 15px;
+                        color: rgb(255, 17, 0);
+                        margin-top: 0px;
+                        position: absolute;
+                        margin-left: -15px;
+                        font-weight: bold;
+                      "
+                      (click)="removeImages(previewImage)"
+                      height="10px"
+                    ></em>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- </div> -->
+
+          <div class="pl-3 mt-3">
+            <p style="color: black">
+              <b>{{ selectedLang === "en" ? "Note:" : "注記:" }}</b>
+              {{ "note.note" | translate }}
+            </p>
+          </div>
+
+          <div
+            class="card-footer footer-btn-block border-0 bg-transparent"
+            style="margin-left: -0.5%"
+          >
+            <button
+              class="btn btn-primary graident btn-small custom-button"
+              [disabled]="isSubmitDisabled()"
+              type="submit"
+              *ngIf="noticeId"
+            >
+              {{ "notice.Update" | translate }}
+            </button>
+            <button
+              class="btn btn-primary graident btn-small custom-button"
+              [disabled]="isSubmitDisabled()"
+              type="submit"
+              *ngIf="!noticeId"
+            >
+              {{ "notice.AddNotification" | translate }}
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary btn-small custom-button mt-2 mt-sm-0 ml-sm-2"
+              (click)="onCancel()"
+            >
+              {{ "notice.Cancel" | translate }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

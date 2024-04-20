@@ -1,0 +1,193 @@
+<div class="wh700">
+  <section class="content">
+    <div class="page-title">
+      <div class="title_left">
+        <h2>
+          <b>{{ "qol.QolDetails" | translate }}</b>
+        </h2>
+      </div>
+      <div class="title_right">
+        <input
+          class="btn btn-primary graident btn-small btn-pad-top-bot-4"
+          type="button"
+          value="{{ 'qol.Back' | translate }}"
+          (click)="goBack()"
+          style="float: right"
+        />
+      </div>
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="pathway-template">
+      <div class="row">
+        <div class="col-12">
+          <form>
+            <div class="container-fluid">
+              <div class="row mt-4">
+                <div class="col-12 col-md-6 col-lg-4">
+                  <div class="form-group mb-3">
+                    <label class="label">{{
+                      "qol.Min.Value" | translate
+                    }}</label>
+                    <p>{{ qolDetails?.min_value }}</p>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                  <div class="form-group mb-3">
+                    <label class="label">{{
+                      "qol.Max.Value" | translate
+                    }}</label>
+                    <p>{{ qolDetails?.max_value }}</p>
+                  </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                  <div class="form-group mb-3">
+                    <label class="label">{{ "qol.Level" | translate }}</label>
+                    <div class="language-toggle">
+                      <span
+                        (click)="selectLng = 'ja'"
+                        [ngClass]="{ active: selectLng === 'ja' }"
+                        >Jap</span
+                      >
+                      <span
+                        (click)="selectLng = 'en'"
+                        [ngClass]="{ active: selectLng === 'en' }"
+                        >Eng</span
+                      >
+                    </div>
+                    <div>
+                      <p>
+                        {{
+                          selectLng === "en"
+                            ? qolDetails?.level.en
+                            : qolDetails?.level.ja
+                        }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="container-fluid">
+              <div class="row mt-4">
+                <div class="col-12 col-md-6 col-lg-12">
+                  <div class="form-group mb-3">
+                    <label class="label">{{
+                      "qol.Description" | translate
+                    }}</label>
+                    <div class="language-toggle">
+                      <span
+                        (click)="selectedLng = 'ja'"
+                        [ngClass]="{ active: selectedLng === 'ja' }"
+                        >Jap</span
+                      >
+                      <span
+                        (click)="selectedLng = 'en'"
+                        [ngClass]="{ active: selectedLng === 'en' }"
+                        >Eng</span
+                      >
+                    </div>
+                    <p>
+                      {{
+                        selectedLng === "en"
+                          ? qolDetails?.description.en
+                          : qolDetails?.description.ja
+                      }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="container-fluid">
+              <div class="row mt-4">
+                <div class="col-12 col-md-6 col-lg-6">
+                  <div class="form-group mb-3">
+                    <label class="label">{{
+                      "qol.UploadedVideos" | translate
+                    }}</label>
+                    <div class="row">
+                      <div
+                        class="col-md-12"
+                        *ngFor="
+                          let videoPreview of qolPreviewVideos;
+                          let i = index
+                        "
+                      >
+                        <a href="{{ videoPreview }}" target="_blank">
+                          <video
+                            class="preview-video"
+                            preload="metadata"
+                            height="100px"
+                            width="100px"
+                          >
+                            <source [src]="videoPreview" type="video/mp4" />
+                            {{
+                              "qol.Yourbrowserdoesnotsupportthevideotag."
+                                | translate
+                            }}
+                          </video>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="container-fluid">
+              <div class="row mt-4">
+                <div class="col-12 col-md-6 col-lg-6">
+                  <div class="form-group mb-3">
+                    <input
+                      type="checkbox"
+                      [checked]="qolDetails?.vibrations"
+                      class="mr-2"
+                      [disabled]="true"
+                    />
+
+                    <label class="label">
+                      {{ "qol.Vibrations" | translate }}
+                    </label>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-6">
+                  <div class="form-group mb-3">
+                    <input
+                      type="checkbox"
+                      [checked]="qolDetails?.led"
+                      class="mr-2"
+                      [disabled]="true"
+                    />
+                    <label class="label">
+                      {{ "qol.LEDLighting" | translate }}
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-4" *ngIf="qolDetails?.vibrations == true">
+                  <div class="form-group mb-3">
+                    <label>{{ "qol.VibrationTime" | translate }}</label>
+                  </div>
+                  {{ qolDetails.vibrationTime }}
+                </div>
+                <div class="col-md-5">
+                  <div class="form-group mb-3">
+                    <label>{{
+                      selectedLang === "en" ? "Color code" : "カラーコード"
+                    }}</label>
+                    <input
+                      type="color"
+                      class="form-control"
+                      placeholder="EnterColorCode"
+                      value="{{ qolDetails.colorCode }}"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

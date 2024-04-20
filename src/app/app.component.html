@@ -1,0 +1,19 @@
+<div
+  class="text-right"
+  style="z-index: 10; position: absolute; right: 0px; top: 10px"
+  [hidden]="!showLng()"
+>
+  <label>
+    {{ "HOME.SELECT" | translate }}
+    <select
+      #langSelect
+      (change)="changeLang(langSelect.value)"
+      [ngModel]="initialLang"
+    >
+      <option value="en">Eng</option>
+      <option value="ja">Jap</option>
+    </select>
+  </label>
+</div>
+
+<router-outlet></router-outlet>

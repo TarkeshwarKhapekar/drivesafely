@@ -1,0 +1,37 @@
+<div class="container body">
+   <div class="main_container" >
+      <div class="col-md-3 left_col menu_fixed"  [class.hide] = "hide">
+         <div class="left_col scroll-view">
+            <div class="navbar nav_title" style="border: 0;">
+               <a href="javascript:void(0);" class="site_title"><img src="assets/DS/img/logo-horizontal.png" style="height: 47px; width: 208px;" alt="image"></a>
+            </div>
+            <div class="clearfix"></div>
+            <br />
+            <!-- sidebar menu -->
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+               <!-- {{roles}} -->
+               <app-dashboard-sidebar (toggleClassEvent)="toggleClassEventHandler($event)"></app-dashboard-sidebar>
+            </div>
+            <!-- /sidebar menu -->
+            <!-- /menu footer buttons -->
+            <app-sidebar-footer></app-sidebar-footer>
+            <!-- /menu footer buttons -->
+         </div>
+      </div>
+      <!-- top navigation -->
+      <div class="top_nav">
+         <app-dashboard-header></app-dashboard-header>
+      </div>
+      <!-- /top navigation -->
+      <!-- page content -->
+      <div class="right_col" role="main">
+         <router-outlet></router-outlet>
+      </div>
+   </div>
+   <!-- /page content -->
+   <!-- footer content -->
+   <app-dashboard-footer></app-dashboard-footer>
+   <!-- /footer content -->
+</div>
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-clip-rotate-multiple" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>

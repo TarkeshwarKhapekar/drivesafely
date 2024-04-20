@@ -1,0 +1,58 @@
+.language-toggle {
+  display: inline-flex;
+  position: relative;
+  width: 70px;
+  height: 24px;
+  border-radius: 12px;
+  background-color: #ccc;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.language-toggle span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  height: 100%;
+  line-height: 24px;
+  text-align: center;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.language-toggle span.active {
+  background-color: #2196f3;
+}
+
+.language-toggle span:first-child {
+  border-radius: 12px 0 0 12px;
+}
+
+.language-toggle span:last-child {
+  border-radius: 0 12px 12px 0;
+}
+
+label {
+  margin-right: 10px;
+}
+
+.custom-button-xs {
+  font-size: 15px;
+  padding: 2px 5px;
+}
+
+button,
+.buttons,
+.btn,
+.modal-footer .btn + .btn {
+  margin-bottom: 1px;
+  margin-right: 0px;
+}
+
+@media screen and (max-width: 576px) {
+  .header-btn-block {
+    display: flex;
+  }
+}

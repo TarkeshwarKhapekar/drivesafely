@@ -1,0 +1,13 @@
+.custom-button-xs {
+  font-size: 15px;
+  padding: 2px 5px;
+}
+
+button,
+.buttons,
+.btn,
+.modal-footer .btn + .btn {
+  margin-bottom: 1px;
+
+  margin-right: 0px;
+}

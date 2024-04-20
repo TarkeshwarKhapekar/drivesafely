@@ -1,0 +1,89 @@
+<section class="content wh700">
+  <div class="page-title">
+    <div class="title_left">
+      <h2>
+        <b>{{ "corporateUser.CorporateUserDetails" | translate }}</b>
+      </h2>
+    </div>
+    <div class="title_right">
+      <input
+        class="btn btn-primary graident btn-small btn-pad-top-bot-4"
+        type="button"
+        value="{{ 'corporateUser.Back' | translate }}"
+        (click)="goBack()"
+        style="float: right"
+      />
+    </div>
+  </div>
+  <div class="clearfix"></div>
+
+  <div class="pathway-template">
+    <div class="row">
+      <div class="col-12">
+        <form>
+          <div class="card-body">
+            <div class="container-fluid">
+              <div class="row mt-4">
+                <div class="col-12 col-md-6 col-lg-6">
+                  <div class="form-group mb-3">
+                    <label
+                      ><b>{{ "corporateUser.Name" | translate }}</b></label
+                    >
+                    <p>{{ corporateDetails?.name }}</p>
+                  </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-6">
+                  <div class="form-group mb-3">
+                    <label
+                      ><b>{{ "corporateUser.EmailId" | translate }}</b></label
+                    >
+                    <p>{{ corporateDetails?.email }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="container-fluid">
+              <div class="row mt-4">
+                <div class="col-12 col-md-6 col-lg-6">
+                  <div class="form-group mb-3">
+                    <label
+                      ><b>{{
+                        "corporateUser.PhoneNumber" | translate
+                      }}</b></label
+                    >
+                    <p>{{ corporateDetails?.phone }}</p>
+                  </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-6">
+                  <div class="form-group mb-3">
+                    <label
+                      ><b>{{ "corporateUser.Gender" | translate }}</b></label
+                    >
+                    <p>{{ corporateDetails?.gender }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="container-fluid">
+              <div class="row mt-4">
+                <div class="col-12 col-md-6 col-lg-6">
+                  <div class="form-group mb-3">
+                    <label
+                      ><b>{{
+                        "corporateUser.BusinessCode" | translate
+                      }}</b></label
+                    >
+                    <p>{{ corporateDetails.corporateCode }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

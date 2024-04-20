@@ -1,0 +1,418 @@
+<div class="wh700">
+  <div class="page-title">
+    <div class="title_left">
+      <h2>
+        <b *ngIf="qolId">{{ "qol.EditQol" | translate }}</b>
+        <b *ngIf="!qolId">{{ "qol.AddQol" | translate }}</b>
+      </h2>
+    </div>
+    <div class="title_right">
+      <input
+        class="btn btn-primary graident btn-small btn-pad-top-bot-4"
+        type="button"
+        value="{{ 'qol.Back' | translate }}"
+        (click)="goBack()"
+        style="float: right"
+      />
+    </div>
+  </div>
+  <div class="clearfix"></div>
+
+  <div class="pathway-template">
+    <div class="row">
+      <div class="col-12">
+        <form [formGroup]="addQolForm" (ngSubmit)="onSubmit()">
+          <div class="card-body">
+            <div class="container-fluid">
+              <div class="row mt-4">
+                <div class="col-12 col-md-6 col-lg-4">
+                  <div class="form-group mb-3">
+                    <label>{{ "qol.MinimumValue" | translate }}</label>
+                    <input
+                      type="text"
+                      class="form-control mt-2"
+                      placeholder="{{ 'qol.EnterMinimumValue' | translate }}"
+                      maxlength="10"
+                      formControlName="min_value"
+                      [ngClass]="{ 'form-submitted': submitted }"
+                    />
+                  </div>
+                  <span
+                    *ngIf="
+                      submitted ||
+                      (f.min_value.errors &&
+                        (f.min_value.dirty || f.min_value.touched))
+                    "
+                  >
+                    <label
+                      class="text-danger"
+                      *ngIf="addQolForm.get('min_value').hasError('required')"
+                    >
+                      {{ "qol.Min.valueisrequired!" | translate }}
+                    </label>
+                  </span>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                  <div class="form-group mb-3">
+                    <label>{{ "qol.MaximumValue" | translate }}</label>
+                    <input
+                      type="text"
+                      class="form-control mt-2"
+                      placeholder="{{ 'qol.EnterMaximumValue' | translate }}"
+                      formControlName="max_value"
+                    />
+                  </div>
+                  <span
+                    *ngIf="
+                      submitted ||
+                      (f.max_value.errors &&
+                        (f.max_value.dirty || f.max_value.touched))
+                    "
+                  >
+                    <label
+                      class="text-danger"
+                      *ngIf="addQolForm.get('max_value').hasError('required')"
+                    >
+                      {{ "qol.Max.valueisrequired!" | translate }}
+                    </label>
+                  </span>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                  <div class="form-group mb-3">
+                    <label>{{ "qol.Level" | translate }}</label>
+                    <div class="language-toggle">
+                      <span
+                        (click)="selectedLng = 'ja'"
+                        [ngClass]="{ active: selectedLng === 'ja' }"
+                        >Jap</span
+                      >
+                      <span
+                        (click)="selectedLng = 'en'"
+                        [ngClass]="{ active: selectedLng === 'en' }"
+                        >Eng</span
+                      >
+                    </div>
+                    <input
+                      type="text"
+                      class="form-control mt-2"
+                      placeholder="{{ 'qol.EnterLevel' | translate }}"
+                      formControlName="level"
+                      [hidden]="selectedLng !== 'en'"
+                    />
+
+                    <input
+                      type="text"
+                      class="form-control mt-2"
+                      placeholder="{{ 'qol.EnterLevel' | translate }}"
+                      formControlName="levelJa"
+                      [hidden]="selectedLng !== 'ja'"
+                    />
+
+                    <span
+                      *ngIf="
+                        submitted ||
+                        (f.level.errors &&
+                          (f.level.dirty || f.level.touched)) ||
+                        (f.levelJa.errors &&
+                          (f.levelJa.dirty || f.levelJa.touched))
+                      "
+                    >
+                      <label
+                        class="text-danger"
+                        *ngIf="
+                          selectedLng == 'en' &&
+                          addQolForm.get('level').hasError('required')
+                        "
+                      >
+                        {{ "qol.Levelisrequired!" | translate }}
+                      </label>
+                      <label
+                        class="text-danger"
+                        *ngIf="
+                          selectedLng == 'ja' &&
+                          addQolForm.get('levelJa').hasError('required')
+                        "
+                      >
+                        {{ "qol.Levelisrequired!" | translate }}
+                      </label>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="container-fluid">
+              <div class="row mt-4">
+                <div class="col-12 col-md-6 col-lg-12">
+                  <div class="form-group mb-3">
+                    <label>{{ "qol.Description" | translate }}</label>
+                    <div class="language-toggle">
+                      <span
+                        (click)="selectLng = 'ja'"
+                        [ngClass]="{ active: selectLng === 'ja' }"
+                        >Jap</span
+                      >
+                      <span
+                        (click)="selectLng = 'en'"
+                        [ngClass]="{ active: selectLng === 'en' }"
+                        >Eng</span
+                      >
+                    </div>
+                    <textarea
+                      type="text"
+                      class="form-control mt-2"
+                      placeholder="{{ 'qol.EnterDescription' | translate }}"
+                      [ngClass]="{ 'form-submitted': submitted }"
+                      formControlName="description"
+                      [hidden]="selectLng !== 'en'"
+                    ></textarea>
+
+                    <!-- <span
+                      *ngIf="
+                        submitted ||
+                        (f.description.errors &&
+                          (f.description.dirty || f.description.touched)) ||
+                        (f.descriptionJa.errors &&
+                          (f.descriptionJa.dirty || f.descriptionJa.touched))
+                      "
+                    >
+                      <label
+                        class="text-danger"
+                        *ngIf="
+                          selectLng == 'en' &&
+                          addQolForm.get('description').hasError('required')
+                        "
+                      >
+                        {{ "qol.Descriptionisrequired!" | translate }}
+                      </label>
+                      <label
+                        class="text-danger"
+                        *ngIf="
+                          selectLng == 'ja' &&
+                          addQolForm.get('descriptionJa').hasError('required')
+                        "
+                      >
+                        {{ "qol.Descriptionisrequired!" | translate }}
+                      </label>
+                    </span> -->
+                    <textarea
+                      type="text"
+                      class="form-control mt-2"
+                      placeholder="{{ 'qol.EnterDescription' | translate }}"
+                      formControlName="descriptionJa"
+                      [hidden]="selectLng !== 'ja'"
+                    >
+                    </textarea>
+                    <span
+                    *ngIf="
+                      submitted ||
+                      (f.description.errors &&
+                        (f.description.dirty || f.description.touched)) ||
+                      (f.descriptionJa.errors &&
+                        (f.descriptionJa.dirty || f.descriptionJa.touched))
+                    "
+                  >
+                    <label
+                      class="text-danger"
+                      *ngIf="
+                        selectLng == 'en' &&
+                        addQolForm.get('description').hasError('required')
+                      "
+                    >
+                      {{ "qol.Descriptionisrequired!" | translate }}
+                    </label>
+                    <label
+                      class="text-danger"
+                      *ngIf="
+                        selectLng == 'ja' &&
+                        addQolForm.get('descriptionJa').hasError('required')
+                      "
+                    >
+                      {{ "qol.Descriptionisrequired!" | translate }}
+                    </label>
+                  </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="container-fluid">
+              <div class="row mt-4">
+                <div class="col-md-5 mb-3">
+                  <div class="form-group">
+                    <div class="upload-img" (click)="openVideoSelector()">
+                      <i class="fa fa-camera action_btn" aria-hidden="true"></i>
+                      <span
+                        class="action_btn"
+                        style="cursor: pointer"
+                        *ngIf="!qolId"
+                      >
+                        {{ "qol.UploadVideos" | translate }}</span
+                      >
+                      <span
+                        class="action_btn"
+                        style="cursor: pointer"
+                        *ngIf="qolId"
+                      >
+                        {{ "qol.UploadVideo" | translate }}</span
+                      >
+                      <input
+                        type="file"
+                        style="display: none"
+                        class="btn chngPic video-upload"
+                        accept="video/*"
+                        name="file"
+                        id="file"
+                        (change)="onVideoSelectorChange($event)"
+                        formControlName="videos"
+                      />
+                    </div>
+                    <div class="row">
+                      <div
+                        class="col-md-6"
+                        *ngFor="
+                          let videoPreview of qolPreviewVideos;
+                          let i = index
+                        "
+                      >
+                        <video
+                          class="preview-video"
+                          preload="metadata"
+                          height="100px"
+                          width="100px"
+                        >
+                          <source [src]="videoPreview" type="video/mp4" />
+                          {{
+                            "qol.Yourbrowserdoesnotsupportthevideotag."
+                              | translate
+                          }}
+                        </video>
+                        <em
+                          class="fa fa-times-circle remove_icon"
+                          style="
+                            font-size: 15px;
+                            color: rgb(255, 17, 0);
+                            margin-top: 18px;
+                            position: absolute;
+                            margin-left: -15px;
+                            font-weight: bold;
+                          "
+                          (click)="removeVideo(videoPreview)"
+                        ></em>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-5"></div>
+                <div class="col-md-5">
+                  <div class="form-group mb-3">
+                    <input
+                      type="checkbox"
+                      formControlName="vibrations"
+                      [checked]="isCheckedd"
+                      [(ngModel)]="isCheckedd"
+                      class="mr-2"
+                    />
+                    <label>{{ "qol.Vibrations" | translate }}</label>
+                  </div>
+                </div>
+
+                <div class="col-md-5">
+                  <div class="form-group mb-3">
+                    <input
+                      type="checkbox"
+                      formControlName="led"
+                      [checked]="isChecked"
+                      class="mr-2"
+                    />
+                    <label>{{ "qol.LEDLighting" | translate }}</label>
+                  </div>
+                </div>
+
+                <div class="col-md-4" *ngIf="isCheckedd">
+                  <div class="form-group mb-3">
+                    <label>{{ "qol.VibrationTime" | translate }}</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      placeholder="{{ 'qol.EnterVibrationTime' | translate }}"
+                      formControlName="vibrationTime"
+                      min="1"
+                      max="60"
+                    />
+                  </div>
+                  <span
+                    *ngIf="
+                      submitted ||
+                      (f.vibrationTime.errors &&
+                        (f.vibrationTime.dirty || f.vibrationTime.touched))
+                    "
+                  >
+                    <label
+                      class="text-danger"
+                      *ngIf="
+                        addQolForm.get('vibrationTime').hasError('required') ||
+                        addQolForm.get('vibrationTime').hasError('min') ||
+                        addQolForm.get('vibrationTime').hasError('max')
+                      "
+                    >
+                      {{ "qol.vibrationTimeValidation" | translate }}
+                    </label>
+                  </span>
+                </div>
+
+                <div class="col-md-5">
+                  <div class="form-group mb-3">
+                    <label>{{
+                      selectedLang === "en" ? "Color code" : "カラーコード"
+                    }}</label>
+                    <input
+                      type="color"
+                      class="form-control"
+                      placeholder="EnterColorCode"
+                      formControlName="colorCode"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pl-4 mt-3">
+            <p style="color: black; padding-left: 12px">
+              <b> {{ selectedLang === "en" ? "Note:" : "注記:" }} </b>
+              {{ "note.note" | translate }}
+            </p>
+          </div>
+
+          <div
+            class="card-footer footer-btn-block border-0 bg-transparent"
+            style="margin-left: 1.5%"
+          >
+            <button
+              class="btn btn-primary graident btn-small custom-button"
+              [disabled]="isSubmitDisabled()"
+              type="submit"
+              *ngIf="qolId"
+            >
+              {{ "qol.Update" | translate }}
+            </button>
+            <button
+              class="btn btn-primary graident btn-small custom-button"
+              [disabled]="isSubmitDisabled()"
+              type="submit"
+              *ngIf="!qolId"
+            >
+              {{ "qol.AddQol" | translate }}
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary btn-small custom-button mt-2 mt-sm-0 ml-sm-2"
+              (click)="onCancel()"
+            >
+              {{ "qol.Cancel" | translate }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

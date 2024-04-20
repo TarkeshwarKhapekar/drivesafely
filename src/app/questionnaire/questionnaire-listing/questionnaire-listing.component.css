@@ -1,0 +1,15 @@
+
+
+
+.showing{
+    display: block;
+}
+
+.care-path-right-icon a{
+    background-color: rgb(27, 86, 219);
+    width: 100%;
+    height:100%;
+    padding: 0.5rem;
+    color: white;
+    border-radius: 50%;
+}
